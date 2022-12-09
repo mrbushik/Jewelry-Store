@@ -16,11 +16,6 @@ const productData = (state = initialState, action: any) => {
         ...state,
         womanJewelry: action.payload,
       };
-    case "CHANGE_MENS_FILTERED_JEWELRY":
-      return {
-        ...state,
-        mensFilteredJewelry: action.payload,
-      };
 
     default:
       return state;

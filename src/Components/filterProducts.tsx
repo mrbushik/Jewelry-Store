@@ -6,7 +6,6 @@ import {
   productFilters,
   productItem,
 } from "./interfaces";
-import { useDispatch, useSelector } from "react-redux";
 
 type handleTarget = {
   name: string;
@@ -16,23 +15,14 @@ type handleTarget = {
 type filterProductsProps = {
   products: productItem[];
   onSort(items: productItem[]): void;
+  currentProducts: productItem[];
 };
 
 const FilterProducts: React.FC<filterProductsProps> = ({
   products,
   onSort,
+  currentProducts,
 }) => {
-  const dispatch: any = useDispatch();
-  const filteredJewelry: productItem[] = useSelector(
-    (state: any) => state.productData.mensFilteredJewelry
-  );
-  const [currentElements, setCurrentElements] = useState(filteredJewelry);
-
-  useEffect(() => {
-    console.log("change");
-    setCurrentElements(filteredJewelry);
-  }, [filteredJewelry]);
-
   const PRICE_FILTER_TYPES: filterPrice[] = [
     { name: "Убыванию", value: false },
     { name: "Возрастанию", value: true },
@@ -61,13 +51,13 @@ const FilterProducts: React.FC<filterProductsProps> = ({
   const priceSort = () => {
     sortTypes.price.value
       ? onSort(
-          products.sort(
+          currentProducts.sort(
             (a: productItem, b: productItem) =>
               Number(a.price) - Number(b.price)
           )
         )
       : onSort(
-          products
+          currentProducts
             .sort(
               (a: productItem, b: productItem) =>
                 Number(b.price) - Number(a.price)
@@ -76,8 +66,18 @@ const FilterProducts: React.FC<filterProductsProps> = ({
         );
   };
 
+  const filterByType = () => {
+    if (sortTypes.filter.value === "all") return onSort(products);
+    onSort(
+      products.filter(
+        (item: productItem) => item.metal === sortTypes.filter.value
+      )
+    );
+  };
+
   useEffect(() => {
     if (sortTypes.price) priceSort();
+    // filterByType();
   }, [sortTypes]);
 
   return (
@@ -155,9 +155,6 @@ const FilterProducts: React.FC<filterProductsProps> = ({
           </div>
         </div>
       )}
-      {/*<div>*/}
-      {/*  <ProductRender items={currentElements} />*/}
-      {/*</div>*/}
     </div>
   );
 };
