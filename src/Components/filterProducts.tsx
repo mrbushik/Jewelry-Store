@@ -7,9 +7,6 @@ import {
   productItem,
 } from "./interfaces";
 import { useDispatch, useSelector } from "react-redux";
-import { filteredMensJewelry } from "./redux/actions/productData";
-import ProductRender from "./productRender";
-import { Simulate } from "react-dom/test-utils";
 
 type handleTarget = {
   name: string;
@@ -18,7 +15,7 @@ type handleTarget = {
 
 type filterProductsProps = {
   products: productItem[];
-  onSort(items: productItem): void;
+  onSort(items: productItem[]): void;
 };
 
 const FilterProducts: React.FC<filterProductsProps> = ({
@@ -46,8 +43,7 @@ const FilterProducts: React.FC<filterProductsProps> = ({
     { text: "Золотые изделия", value: "gold" },
   ];
 
-  const [displayingFilters, setDisplayingFilters] = useState<boolean>(true);
-  //change to false
+  const [displayingFilters, setDisplayingFilters] = useState<boolean>(false);
   const [sortTypes, setSortTypes] = useState<filterProduct>({
     price: "",
     filter: PRODUCT_FILTER_TYPES[0],
@@ -63,39 +59,20 @@ const FilterProducts: React.FC<filterProductsProps> = ({
   };
 
   const priceSort = () => {
-    // sortTypes.price.value
-    //   ? dispatch(
-    //       filteredMensJewelry(
-    //         products.sort(
-    //           (a: productItem, b: productItem) =>
-    //             Number(a.price) - Number(b.price)
-    //         )
-    //       )
-    //     )
-    //   : dispatch(
-    //       filteredMensJewelry(
-    //         products.sort(
-    //           (a: productItem, b: productItem) =>
-    //             Number(b.price) - Number(a.price)
-    //         )
-    //       )
-    //     );
     sortTypes.price.value
-      ? dispatch(
-          filteredMensJewelry(
-            products.sort(
-              (a: productItem, b: productItem) =>
-                Number(a.price) - Number(b.price)
-            )
+      ? onSort(
+          products.sort(
+            (a: productItem, b: productItem) =>
+              Number(a.price) - Number(b.price)
           )
         )
-      : dispatch(
-          filteredMensJewelry(
-            products.sort(
+      : onSort(
+          products
+            .sort(
               (a: productItem, b: productItem) =>
                 Number(b.price) - Number(a.price)
             )
-          )
+            .slice(0, products.length)
         );
   };
 
@@ -178,9 +155,9 @@ const FilterProducts: React.FC<filterProductsProps> = ({
           </div>
         </div>
       )}
-      <div>
-        <ProductRender items={currentElements} />
-      </div>
+      {/*<div>*/}
+      {/*  <ProductRender items={currentElements} />*/}
+      {/*</div>*/}
     </div>
   );
 };

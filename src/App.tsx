@@ -17,7 +17,6 @@ const App: React.FC = () => {
         <Route path="/" component={MainPage} />
         <Redirect to="/" />
       </Switch>
-      <Footer />
     </>
   );
 };
