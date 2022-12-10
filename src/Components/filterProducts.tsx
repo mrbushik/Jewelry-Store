@@ -14,14 +14,16 @@ type handleTarget = {
 
 type filterProductsProps = {
   products: productItem[];
-  onSort(items: productItem[]): void;
+  onSort(items: productItem[], sortByPrice: boolean): void;
   currentProducts: productItem[];
+  priceSort(sortTypes: boolean, items: productItem[]): void;
 };
 
 const FilterProducts: React.FC<filterProductsProps> = ({
   products,
   onSort,
   currentProducts,
+  priceSort,
 }) => {
   const PRICE_FILTER_TYPES: filterPrice[] = [
     { name: "Убыванию", value: false },
@@ -48,37 +50,44 @@ const FilterProducts: React.FC<filterProductsProps> = ({
     }));
   };
 
-  const priceSort = () => {
-    sortTypes.price.value
-      ? onSort(
-          currentProducts.sort(
-            (a: productItem, b: productItem) =>
-              Number(a.price) - Number(b.price)
-          )
-        )
-      : onSort(
-          currentProducts
-            .sort(
-              (a: productItem, b: productItem) =>
-                Number(b.price) - Number(a.price)
-            )
-            .slice(0, products.length)
-        );
-  };
+  // const priceSort = () => {
+  //   sortTypes.price.value
+  //     ? onSort(
+  //         currentProducts.sort(
+  //           (a: productItem, b: productItem) =>
+  //             Number(a.price) - Number(b.price)
+  //         )
+  //       )
+  //     : onSort(
+  //         currentProducts
+  //           .sort(
+  //             (a: productItem, b: productItem) =>
+  //               Number(b.price) - Number(a.price)
+  //           )
+  //           .slice(0, products.length)
+  //       );
+  // };
 
   const filterByType = () => {
-    if (sortTypes.filter.value === "all") return onSort(products);
+    if (sortTypes.filter.value === "all")
+      return onSort(products, sortTypes.price.value);
     onSort(
       products.filter(
         (item: productItem) => item.metal === sortTypes.filter.value
-      )
+      ),
+      sortTypes.price ? sortTypes.price.value : ""
     );
   };
 
   useEffect(() => {
-    if (sortTypes.price) priceSort();
-    // filterByType();
-  }, [sortTypes]);
+
+    filterByType();
+    // priceSort(sortTypes.price.value, currentProducts);
+  }, [sortTypes.filter]);
+
+  useEffect(() => {
+    priceSort(sortTypes.price.value, currentProducts);
+  }, [sortTypes.price]);
 
   return (
     <div className="mt-4  px-3">
