@@ -14,16 +14,14 @@ type handleTarget = {
 
 type filterProductsProps = {
   products: productItem[];
-  onSort(items: productItem[], sortByPrice: boolean): void;
+  onSort(items: productItem[]): void;
   currentProducts: productItem[];
-  priceSort(sortTypes: boolean, items: productItem[]): void;
 };
 
 const FilterProducts: React.FC<filterProductsProps> = ({
   products,
   onSort,
   currentProducts,
-  priceSort,
 }) => {
   const PRICE_FILTER_TYPES: filterPrice[] = [
     { name: "Убыванию", value: false },
@@ -50,43 +48,34 @@ const FilterProducts: React.FC<filterProductsProps> = ({
     }));
   };
 
-  // const priceSort = () => {
-  //   sortTypes.price.value
-  //     ? onSort(
-  //         currentProducts.sort(
-  //           (a: productItem, b: productItem) =>
-  //             Number(a.price) - Number(b.price)
-  //         )
-  //       )
-  //     : onSort(
-  //         currentProducts
-  //           .sort(
-  //             (a: productItem, b: productItem) =>
-  //               Number(b.price) - Number(a.price)
-  //           )
-  //           .slice(0, products.length)
-  //       );
-  // };
+  const priceSort = (items: productItem[]) => {
+    const ascending = [
+      ...items.sort(
+        (a: productItem, b: productItem) => Number(a.price) - Number(b.price)
+      ),
+    ];
+    const descending = [
+      ...items.sort(
+        (a: productItem, b: productItem) => Number(b.price) - Number(a.price)
+      ),
+    ];
+    sortTypes.price.value ? onSort(ascending) : onSort(descending);
+  };
 
   const filterByType = () => {
-    if (sortTypes.filter.value === "all")
-      return onSort(products, sortTypes.price.value);
-    onSort(
-      products.filter(
-        (item: productItem) => item.metal === sortTypes.filter.value
-      ),
-      sortTypes.price ? sortTypes.price.value : ""
+    if (sortTypes.filter.value === "all") return onSort(products);
+    const filteredProducts = products.filter(
+      (item: productItem) => item.metal === sortTypes.filter.value
     );
+    sortTypes.price ? priceSort(filteredProducts) : onSort(filteredProducts);
   };
 
   useEffect(() => {
-
     filterByType();
-    // priceSort(sortTypes.price.value, currentProducts);
   }, [sortTypes.filter]);
 
   useEffect(() => {
-    priceSort(sortTypes.price.value, currentProducts);
+    priceSort(currentProducts);
   }, [sortTypes.price]);
 
   return (
