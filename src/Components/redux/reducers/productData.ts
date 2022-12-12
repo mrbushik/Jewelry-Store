@@ -1,7 +1,6 @@
 const initialState = {
   mensJewelry: [],
   womanJewelry: [],
-  mensFilteredJewelry: [],
 };
 
 const productData = (state = initialState, action: any) => {

@@ -10,11 +10,9 @@ const MensPage: React.FC = () => {
   const mensJewelryItems: productItem[] = useSelector(
     (state: any) => state.productData.mensJewelry
   );
-  const filteredJewelry: productItem[] = useSelector(
-    (state: any) => state.productData.mensFilteredJewelry
-  );
+
   const [filteredProducts, setFilteredProducts] =
-    useState<productItem[]>(filteredJewelry);
+    useState<productItem[]>(mensJewelryItems);
 
   const mensJewelryURL =
     "https://jewelry-store-3488f-default-rtdb.europe-west1.firebasedatabase.app/Products/mens.json";
@@ -41,10 +39,9 @@ const MensPage: React.FC = () => {
         onSort={handleSort}
       />
       <div className="d-flex flex-wrap justify-content-center my-5">
-        {filteredProducts &&
-          filteredProducts.map((item: productItem, index: number) => (
-            <ProductRender item={item} key={index + item.imageLink} />
-          ))}
+        {filteredProducts?.map((item: productItem, index: number) => (
+          <ProductRender item={item} key={index + item.imageLink} />
+        ))}
       </div>
     </div>
   );
