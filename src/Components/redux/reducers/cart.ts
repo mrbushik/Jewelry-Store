@@ -1,6 +1,5 @@
 const initialState = {
   cartItems: [],
-  cartPrice: [],
 };
 
 const cart = (state = initialState, action: any) => {
@@ -8,7 +7,7 @@ const cart = (state = initialState, action: any) => {
     case "ADD_PRODUCT":
       return {
         ...state,
-        cartItems: action.payload,
+        cartItems: [...state.cartItems, action.payload],
       };
 
     default:

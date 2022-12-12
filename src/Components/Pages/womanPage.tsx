@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { productItem } from "../interfaces";
-import ProductRender from "../productRender";
+import ProductRender from "../layout/productRender";
 import { useDispatch, useSelector } from "react-redux";
 import { womanJewelryRequest } from "../redux/actions/productData";
 import FilterProducts from "../filterProducts";
@@ -22,7 +22,6 @@ const WomanPage: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    console.log("updating");
     setWomanFilterProducts(womanJewelryItems);
   }, [womanJewelryItems]);
 
