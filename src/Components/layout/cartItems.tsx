@@ -8,7 +8,7 @@ type cartItemsProps = {
 
 const CartItems: React.FC<cartItemsProps> = ({ item, onDelete }) => {
   return (
-    <div className=" my-3 d-flex align-items-center">
+    <div className=" my-3 d-flex align-items-center px-2">
       <img className="cart-img me-3" src={item.imageLink} />
       <p className="pt-2">{item.title}</p>
       <div className="d-flex justify-content-between">
