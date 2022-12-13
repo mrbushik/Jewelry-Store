@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { productItem } from "../interfaces";
 import ProductRender from "../layout/productRender";
 import { useDispatch, useSelector } from "react-redux";
@@ -31,7 +30,7 @@ const WomanPage: React.FC = () => {
 
   return (
     <div>
-      <h3 className="text-center px-4 my-4">Украшения для мужчин</h3>
+      <h3 className="text-center px-4 my-4">Украшения для женщин</h3>
       <FilterProducts
         products={womanJewelryItems}
         onSort={handleSort}

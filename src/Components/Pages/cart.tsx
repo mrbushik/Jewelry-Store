@@ -5,7 +5,6 @@ import CartItems from "../layout/cartItems";
 
 const Cart: React.FC = () => {
   const cartItems = useSelector((state: any) => state.cart.cartItems);
-  console.log(cartItems);
   return (
     <div>
       <h3 className="text-center mt-4">Корзина с товаром</h3>

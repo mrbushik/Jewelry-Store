@@ -4,16 +4,12 @@ import { mensJewelryRequest } from "../redux/actions/productData";
 import ProductRender from "../layout/productRender";
 import { productItem } from "../interfaces";
 import FilterProducts from "../filterProducts";
-import { addProductToCart } from "../redux/actions/cart";
 
 const MensPage: React.FC = () => {
   const dispatch: any = useDispatch();
   const mensJewelryItems: productItem[] = useSelector(
     (state: any) => state.productData.mensJewelry
   );
-  // const dispatch: any = useDispatch();
-
-  // const addToCart: void = dispatch(addProductToCart(item));
   const [filteredProducts, setFilteredProducts] =
     useState<productItem[]>(mensJewelryItems);
 

@@ -1,18 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { productItem } from "../interfaces";
-import { useDispatch } from "react-redux";
-import { addProductToCart } from "../redux/actions/cart";
+import { useDispatch, useSelector } from "react-redux";
+import { addProductInCart, deleteProductInCart } from "../redux/actions/cart";
 
 type productRenderProps = {
   item: productItem;
 };
 const ProductRender: React.FC<productRenderProps> = ({ item }) => {
   const dispatch: any = useDispatch();
-  const [putInCart, setPutInCart] = useState<boolean>(false);
+  const cartItems = useSelector((state: any) => state.cart.cartItems);
+
+  const [putInCart, setPutInCart] = useState<boolean | productItem>(
+    cartItems.find(
+      (product: productItem) => product.imageLink === item.imageLink
+    )
+  );
 
   const addToCart = () => {
-    dispatch(addProductToCart(item));
+    dispatch(addProductInCart(item));
     setPutInCart(true);
+  };
+  const deleteProduct = () => {
+    dispatch(
+      deleteProductInCart(
+        cartItems.filter(
+          (product: productItem) => product.imageLink !== item.imageLink
+        )
+      )
+    );
+    setPutInCart(false);
   };
 
   return (
@@ -34,7 +50,9 @@ const ProductRender: React.FC<productRenderProps> = ({ item }) => {
       <div className="d-flex justify-content-between">
         <p>{item.price} BYN</p>
         {putInCart ? (
-          <span className="btn btn-danger">удалить из корзины</span>
+          <span className="btn btn-danger" onClick={deleteProduct}>
+            удалить из корзины
+          </span>
         ) : (
           <span className="btn btn-danger" onClick={addToCart}>
             В корзину
