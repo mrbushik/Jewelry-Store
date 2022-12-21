@@ -9,16 +9,18 @@ const MainSuggestions: React.FC = () => {
       </h3>
 
       <div className="d-flex justify-content-center px-3">
-        <Link to="/mens">
+        <Link to="/mans">
           <img
             className="w-100"
             src="https://static.insales-cdn.com/r/gDO2OXk4Kho/rs:fit:700:700:1/plain/files/1/2049/16304129/original/Frame-1_5cb54a9637e32608ce5fb0d74e8b945a.jpg"
+         alt='mans'
           />
         </Link>
         <Link className="ms-3" to="/woman">
           <img
             className="w-100"
             src="https://static.insales-cdn.com/r/c9ZUsWrkjZk/rs:fit:700:700:1/plain/files/1/2048/16304128/original/Frame_61d5d23905f06c46854c8552ba33ebb8.jpg"
+        alt='woman'
           />
         </Link>
       </div>

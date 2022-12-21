@@ -5,7 +5,7 @@ import ProductRender from "../layout/productRender";
 import { productItem } from "../interfaces";
 import FilterProducts from "../filterProducts";
 
-const MensPage: React.FC = () => {
+const MansPage: React.FC = () => {
   const dispatch: any = useDispatch();
   const mensJewelryItems: productItem[] = useSelector(
     (state: any) => state.productData.mensJewelry
@@ -46,4 +46,4 @@ const MensPage: React.FC = () => {
   );
 };
 
-export default MensPage;
+export default MansPage;

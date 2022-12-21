@@ -1,6 +1,8 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { productItem } from "../interfaces";
+import { Link } from "react-router-dom";
+
 import CartItems from "../layout/cartItems";
 import { deleteProductInCart } from "../redux/actions/cart";
 
@@ -27,8 +29,15 @@ const Cart: React.FC = () => {
             {cartItems.map((item: productItem, index: number) => (
               <CartItems item={item} key={index} onDelete={handleDelete} />
             ))}
-            <div className="text-center fs-3 fw-semibold mt-5">
-              Итого к оплате {cartPrice} BYN
+            <div className="d-flex flex-wrap">
+              <div className="text-center fs-3 fw-semibold mt-5">
+                Итого к оплате {cartPrice} BYN
+              </div>
+              <div>
+                <Link to="/order" className="btn btn-outline-primary mt-5 ms-3">
+                  Оформить заказ
+                </Link>
+              </div>
             </div>
           </div>
         ) : (
