@@ -20,3 +20,8 @@ export interface productFilters {
   text: string;
   value: string;
 }
+
+export interface fieldTarget {
+  name: string;
+  value: any;
+}

@@ -1,9 +1,9 @@
-import React, {useState} from "react";
-import { filterPrice } from "../interfaces";
+import React, { useState } from "react";
+import { fieldTarget, filterPrice } from "../interfaces";
 
 type selectedFieldProps = {
   value: any;
-  onChange: any;
+  onChange(target: fieldTarget): void;
   defaultOption: string;
   options: filterPrice[];
   name: string;
