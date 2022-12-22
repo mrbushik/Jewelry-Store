@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
 import { useForm, SubmitHandler } from "react-hook-form";
 import SuccessfulOrder from "../layout/successfulOrder";
+import {deleteProductInCart} from "../redux/actions/cart";
 
 interface IFormInputs {
   firstName: string;
@@ -11,10 +12,17 @@ interface IFormInputs {
 }
 
 const OrderPage: React.FC = () => {
+  const history = useHistory();
+  const dispatch: any = useDispatch()
+
   const cartPrice = useSelector((state: any) => state.cart.cartPrice);
   const cartItems = useSelector((state: any) => state.cart.cartItems);
 
-  const [successfulOrder, setSuccessfulOrder] = useState(true);
+  const [successfulOrder, setSuccessfulOrder] = useState(false);
+
+  useEffect(() => {
+    if (!cartItems.length) history.push("/cart");
+  }, []);
 
   const getSubmitData = (userData: IFormInputs) => {
     return { userInfo: userData, order: cartItems };
@@ -22,6 +30,7 @@ const OrderPage: React.FC = () => {
 
   const onSubmit: SubmitHandler<IFormInputs> = (data) => {
     setSuccessfulOrder(true);
+    dispatch(deleteProductInCart([]))
     console.log(getSubmitData(data));
   };
 

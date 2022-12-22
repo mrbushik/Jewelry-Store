@@ -11,7 +11,7 @@ const NavBar: React.FC = () => {
         <div>
           <ul className="d-flex  nav-list">
             <li className="mx-2">
-              <Link className="nav-link" aria-current="page" to="/mens">
+              <Link className="nav-link" aria-current="page" to="/mans">
                 Мужское
               </Link>
             </li>

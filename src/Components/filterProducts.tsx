@@ -48,22 +48,28 @@ const FilterProducts: React.FC<filterProductsProps> = ({
     }));
   };
 
-  const priceSort = (items: productItem[]) => {
-    const ascending = [
+  const priceSort = (items: productItem[]) =>
+    sortTypes.price.value ? ascendingSort(items) : descendingSort(items);
+
+  const ascendingSort = (items: productItem[]) => {
+    onSort([
       ...items.sort(
         (a: productItem, b: productItem) => Number(a.price) - Number(b.price)
       ),
-    ];
-    const descending = [
+    ]);
+  };
+
+  const descendingSort = (items: productItem[]) => {
+    onSort([
       ...items.sort(
         (a: productItem, b: productItem) => Number(b.price) - Number(a.price)
       ),
-    ];
-    sortTypes.price.value ? onSort(ascending) : onSort(descending);
+    ]);
   };
 
   const filterByType = () => {
-    if (sortTypes.filter.value === "all") return onSort(products);
+    if (sortTypes.filter.value === "all")
+      return sortTypes.price ? priceSort(products) : onSort(products);
     const filteredProducts = products.filter(
       (item: productItem) => item.metal === sortTypes.filter.value
     );
