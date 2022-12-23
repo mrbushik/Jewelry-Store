@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { productItem } from "../interfaces";
 import { Link } from "react-router-dom";
 
-import CartItems from "../layout/cartItems";
+import CartItems from "../ui/cartItems";
 import { deleteProductInCart } from "../redux/actions/cart";
 
 const Cart: React.FC = () => {

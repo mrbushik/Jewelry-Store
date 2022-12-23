@@ -25,3 +25,14 @@ export interface fieldTarget {
   name: string;
   value: any;
 }
+
+export interface IFormInputs {
+  firstName: string;
+  email: string;
+  phone: string;
+}
+
+export interface orderItem {
+  order: productItem[];
+  userInfo: IFormInputs;
+}

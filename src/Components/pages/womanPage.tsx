@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { productItem } from "../interfaces";
-import ProductRender from "../layout/productRender";
+import ProductRender from "../ui/productRender";
 import { useDispatch, useSelector } from "react-redux";
 import { womanJewelryRequest } from "../redux/actions/productData";
 import FilterProducts from "../filterProducts";

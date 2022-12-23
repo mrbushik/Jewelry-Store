@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { mensJewelryRequest } from "../redux/actions/productData";
-import ProductRender from "../layout/productRender";
+import ProductRender from "../ui/productRender";
 import { productItem } from "../interfaces";
 import FilterProducts from "../filterProducts";
 

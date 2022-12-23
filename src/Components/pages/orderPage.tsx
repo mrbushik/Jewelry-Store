@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm, SubmitHandler } from "react-hook-form";
-import SuccessfulOrder from "../layout/successfulOrder";
-import {deleteProductInCart} from "../redux/actions/cart";
+import SuccessfulOrder from "../ui/successfulOrder";
+import { deleteProductInCart } from "../redux/actions/cart";
+import axios from "axios";
+import { log } from "util";
+import {IFormInputs} from "../interfaces";
 
-interface IFormInputs {
-  firstName: string;
-  email: string;
-  phone: string;
-}
+
 
 const OrderPage: React.FC = () => {
   const history = useHistory();
-  const dispatch: any = useDispatch()
+  const dispatch: any = useDispatch();
+  const SEND_ORDER_URL =
+    "https://jewelry-store-3488f-default-rtdb.europe-west1.firebasedatabase.app/orders/.json";
 
   const cartPrice = useSelector((state: any) => state.cart.cartPrice);
   const cartItems = useSelector((state: any) => state.cart.cartItems);
@@ -30,8 +31,12 @@ const OrderPage: React.FC = () => {
 
   const onSubmit: SubmitHandler<IFormInputs> = (data) => {
     setSuccessfulOrder(true);
-    dispatch(deleteProductInCart([]))
-    console.log(getSubmitData(data));
+    dispatch(deleteProductInCart([]));
+    handleRequest(getSubmitData(data));
+  };
+
+  const handleRequest = (data: any) => {
+    axios.post(SEND_ORDER_URL, data).catch((e) => console.log(e));
   };
 
   const {

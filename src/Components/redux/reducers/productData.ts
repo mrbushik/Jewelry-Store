@@ -1,6 +1,7 @@
 const initialState = {
   mensJewelry: [],
   womanJewelry: [],
+  orders:[]
 };
 
 const productData = (state = initialState, action: any) => {
@@ -14,6 +15,11 @@ const productData = (state = initialState, action: any) => {
       return {
         ...state,
         womanJewelry: action.payload,
+      };
+    case "GET_ALL_ORDERS":
+      return {
+       ...state,
+        orders: action.payload,
       };
 
     default:

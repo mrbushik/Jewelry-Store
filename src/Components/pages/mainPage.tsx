@@ -1,5 +1,5 @@
 import React from "react";
-import MainSuggestions from "../layout/mainSuggestions";
+import MainSuggestions from "../ui/mainSuggestions";
 
 const MainPage: React.FC = () => {
   return (
