@@ -3,7 +3,7 @@ import { productItem } from "../interfaces";
 
 type cartItemsProps = {
   item: productItem;
-  onDelete(item?: productItem): any;
+  onDelete?(item?: productItem): void;
 };
 
 const CartItems: React.FC<cartItemsProps> = ({ item, onDelete }) => {
@@ -13,12 +13,12 @@ const CartItems: React.FC<cartItemsProps> = ({ item, onDelete }) => {
       <p className="pt-2">{item.title}</p>
       <div className="d-flex justify-content-between">
         <p className="pt-2 ms-2">{item.price} BYN</p>
-          {/*{onDelete &&  <div*/}
-          {/*    className="text-danger ms-3 pointer  mt-2"*/}
-          {/*    onClick={() => onDelete(item)}*/}
-          {/*>*/}
-          {/*    Удалить*/}
-          {/*</div>}*/}
+          {onDelete &&  <div
+              className="text-danger ms-3 pointer  mt-2"
+              onClick={() => onDelete(item)}
+          >
+              Удалить
+          </div>}
       </div>
     </div>
   );

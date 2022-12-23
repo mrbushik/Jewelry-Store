@@ -5,10 +5,16 @@ import CartItems from "./cartItems";
 
 type orderRenderProps = {
   orderItem: orderItem;
+  onDelete(id: any): void;
+  id: string;
 };
 
-const OrderRender: React.FC<orderRenderProps> = ({ orderItem }) => {
-  const [showInfo, setShowInfo] = useState(true);
+const OrderRender: React.FC<orderRenderProps> = ({
+  orderItem,
+  onDelete,
+  id,
+}) => {
+  const [showInfo, setShowInfo] = useState(false);
 
   const orderSum: any = orderItem.order.reduce(
     (acc: number, item: productItem) => acc + Number(item.price),
@@ -23,37 +29,57 @@ const OrderRender: React.FC<orderRenderProps> = ({ orderItem }) => {
         </p>
         <p className="ms-3  mb-0">
           Количество товара
-          <span className="fw-semibold">{orderItem.order.length} ШТ</span>
+          <span className="fw-semibold mx-1">{orderItem.order.length} ШТ</span>
         </p>
         <p className="ms-3 mb-0">
           сума <span className="fw-semibold"> {orderSum} BYN</span>
         </p>
         <div className="ms-4">
-          <div className="btn btn-outline-primary mx-2">Подробнее</div>
-          <div className="btn btn-danger mx-2">Удалить</div>
+          {!showInfo && (
+            <div
+              className="btn btn-outline-primary mx-2"
+              onClick={() => setShowInfo(true)}
+            >
+              Подробнее
+            </div>
+          )}
+          <div className="btn btn-danger mx-2" onClick={() => onDelete(id)}>
+            Удалить
+          </div>
         </div>
       </div>
       {showInfo && (
-        <div>
+        <div className="mt-3">
           <h5 className="fw-bolder">Информация о клиенте</h5>
           <div>
             <p>
               Номер телефона:
-              <span className="fw-semibold mx-1">
+              <a
+                href={`tel: ${orderItem.userInfo.phone}`}
+                className="fw-semibold mx-1 text-decoration-none"
+              >
                 {orderItem.userInfo.phone}
-              </span>
+              </a>
               почта:
-              <span className="fw-semibold mx-1">
+              <a
+                href={`mailto:${orderItem.userInfo.email}`}
+                className="fw-semibold mx-1 text-decoration-none"
+              >
                 {orderItem.userInfo.email}
-              </span>
+              </a>
             </p>
           </div>
           <div>
             <h5 className="fw-bolder">Заказ</h5>
             {orderItem.order.map((item: productItem, index: number) => (
-// <CartItems item={item} />
+              <CartItems item={item} key={index} />
             ))}
           </div>
+        </div>
+      )}
+      {showInfo && (
+        <div className="btn btn-secondary" onClick={() => setShowInfo(false)}>
+          Закрыть
         </div>
       )}
     </div>

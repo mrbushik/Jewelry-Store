@@ -13,7 +13,7 @@ export const womanJewelry = (theme: any) => ({
 export const allOrders = (theme: any) => ({
   type: "GET_ALL_ORDERS",
   payload: theme,
-})
+});
 
 export const mensJewelryRequest = (url: string) => async (dispatch: any) => {
   await axios
@@ -24,15 +24,14 @@ export const mensJewelryRequest = (url: string) => async (dispatch: any) => {
 
 export const womanJewelryRequest = (url: string) => async (dispatch: any) => {
   await axios
-      .get(url)
-      .then((response) => dispatch(womanJewelry(Object.values(response.data))))
-      .catch((error) => {});
+    .get(url)
+    .then((response) => dispatch(womanJewelry(Object.values(response.data))))
+    .catch((error) => {});
 };
 
 export const allOrdersRequest = (url: string) => async (dispatch: any) => {
   await axios
-      .get(url)
-      .then((response) => dispatch(allOrders(Object.values(response.data))))
-      .catch((error) => {});
+    .get(url)
+    .then((response) => dispatch(allOrders(response.data)))
+    .catch((error) => {});
 };
-
