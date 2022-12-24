@@ -1,7 +1,13 @@
 const initialState = {
   mensJewelry: [],
   womanJewelry: [],
-  orders:[]
+  currentProduct: [],
+  orders: [],
+};
+
+const getTargetProduct = (data: any) => {
+  if (!data.index) return data.theme;
+  return data.theme[data.index];
 };
 
 const productData = (state = initialState, action: any) => {
@@ -18,8 +24,13 @@ const productData = (state = initialState, action: any) => {
       };
     case "GET_ALL_ORDERS":
       return {
-       ...state,
+        ...state,
         orders: action.payload,
+      };
+    case "CURRENT_PRODUCT":
+      return {
+        ...state,
+        currentProduct: getTargetProduct(action.payload),
       };
 
     default:

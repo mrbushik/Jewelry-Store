@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import { productItem } from "../interfaces";
 import { useDispatch, useSelector } from "react-redux";
 import { addProductInCart, deleteProductInCart } from "../redux/actions/cart";
+import { Link, useLocation } from "react-router-dom";
 
 type productRenderProps = {
   item: productItem;
+  id: number;
 };
-const ProductRender: React.FC<productRenderProps> = ({ item }) => {
+const ProductRender: React.FC<productRenderProps> = ({ item, id }) => {
   const dispatch: any = useDispatch();
+  const location = useLocation();
   const cartItems = useSelector((state: any) => state.cart.cartItems);
 
   const [putInCart, setPutInCart] = useState<boolean | productItem>(
@@ -32,7 +35,10 @@ const ProductRender: React.FC<productRenderProps> = ({ item }) => {
   };
 
   return (
-    <div className="product-cart my-3 position-relative">
+    <Link
+      to={`${location.pathname}/${id}`}
+      className="product-cart my-3 position-relative"
+    >
       {putInCart && (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -59,7 +65,7 @@ const ProductRender: React.FC<productRenderProps> = ({ item }) => {
           </span>
         )}
       </div>
-    </div>
+    </Link>
   );
 };
 

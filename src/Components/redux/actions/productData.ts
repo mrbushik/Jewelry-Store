@@ -15,6 +15,11 @@ export const allOrders = (theme: any) => ({
   payload: theme,
 });
 
+export const currentProduct = (theme: any, index?: number) => ({
+  type: "CURRENT_PRODUCT",
+  payload: { theme, index },
+});
+
 export const mensJewelryRequest = (url: string) => async (dispatch: any) => {
   await axios
     .get(url)
@@ -35,3 +40,13 @@ export const allOrdersRequest = (url: string) => async (dispatch: any) => {
     .then((response) => dispatch(allOrders(response.data)))
     .catch((error) => {});
 };
+
+export const currentProductsRequest =
+  (url: string, index: number) => async (dispatch: any) => {
+    await axios
+      .get(url)
+      .then((response) =>
+        dispatch(currentProduct(Object.values(response.data), index))
+      )
+      .catch((error) => {});
+  };

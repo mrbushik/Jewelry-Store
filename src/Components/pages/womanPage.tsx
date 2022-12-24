@@ -38,7 +38,7 @@ const WomanPage: React.FC = () => {
       />
       <div className="d-flex flex-wrap justify-content-center my-5">
         {womanFilterProducts?.map((item: productItem, index: number) => (
-          <ProductRender item={item} key={index + item.imageLink} />
+          <ProductRender item={item} id={index} key={index + item.imageLink} />
         ))}
       </div>
     </div>

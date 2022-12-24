@@ -22,8 +22,11 @@ code {
 }
 .product-cart {
   margin: 0 20px 20px;
+  padding: 0 5px 20px 5px;
   width: 300px;
   height: auto;
+  text-decoration: none;
+  border: 1px solid #1f78fd;
 }
 .sort-title {
   margin-bottom: -10px;
