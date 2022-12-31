@@ -19,11 +19,13 @@ const ProductRender: React.FC<productRenderProps> = ({ item, id }) => {
     )
   );
 
-  const addToCart = () => {
+  const addToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
     dispatch(addProductInCart(item));
     setPutInCart(true);
   };
-  const deleteProduct = () => {
+  const deleteProduct = (e: React.MouseEvent) => {
+    e.preventDefault();
     dispatch(
       deleteProductInCart(
         cartItems.filter(
@@ -53,16 +55,22 @@ const ProductRender: React.FC<productRenderProps> = ({ item, id }) => {
       )}
       <img className="product-img" src={item.imageLink} />
       <p>{item.title}</p>
-      <div className="d-flex justify-content-between">
-        <p>{item.price} BYN</p>
+      <div className="d-flex justify-content-between align-items-center">
+        <span className="ms-1">{item.price} BYN</span>
         {putInCart ? (
-          <span className="btn btn-danger" onClick={deleteProduct}>
+          <div
+            className="btn btn-danger"
+            onClick={(e: React.MouseEvent) => deleteProduct(e)}
+          >
             удалить из корзины
-          </span>
+          </div>
         ) : (
-          <span className="btn btn-danger" onClick={addToCart}>
+          <div
+            className="btn btn-danger"
+            onClick={(e: React.MouseEvent) => addToCart(e)}
+          >
             В корзину
-          </span>
+          </div>
         )}
       </div>
     </Link>

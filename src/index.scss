@@ -50,7 +50,7 @@ code {
 }
 .cart-icon {
   position: absolute;
-  left: 94%;
+  left: 87%;
   top: 5px;
 }
 .order-form {
@@ -72,4 +72,8 @@ code {
 .product-page__img {
   max-width: 90%;
   height: auto;
+}
+
+.product-cart__title {
+  width: 300px;
 }

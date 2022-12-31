@@ -64,14 +64,13 @@ const ProductPage: React.FC = () => {
           />
         </div>
         <div className="ms-3">
-          <h3 className="mt-3 text-center fw-semibold">
+          <h3 className="mt-3 text-start fw-semibold px-2 product-cart__title">
             {currentProductData.title}
           </h3>
 
           <p className="mt-5">
             Метал: {currentProductData.metal === "gold" ? "Золото" : "Серебро"}
           </p>
-
           <p className="fs-5 mt-3 ">
             Цена:
             <span className="fw-bolder">{currentProductData.price} BYN</span>
