@@ -2,6 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const NavBar: React.FC = () => {
+  const authInfo: string | null = localStorage.getItem("name");
+  const [authStatus, setAuthStatus] = React.useState(!authInfo);
+
   return (
     <nav className="navbar navbar-expand-lg bg-light">
       <div className="container-fluid">
@@ -25,6 +28,7 @@ const NavBar: React.FC = () => {
                 Корзина
               </Link>
             </li>
+            <li className="mx-2">{authStatus ? <p>{authInfo}</p> : <></>}</li>
           </ul>
         </div>
       </div>
