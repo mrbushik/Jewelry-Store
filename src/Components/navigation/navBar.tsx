@@ -59,14 +59,17 @@ const NavBar: React.FC = () => {
                   <Link
                     to="/login"
                     onClick={handleClearSession}
-                    className="text-center mt-1 cursor-pointer text-decoration-none"
+                    className="text-end mt-1 cursor-pointer text-decoration-none text-danger"
                   >
                     Выйти
                   </Link>
                 </div>
               ) : (
                 <div>
-                  <Link className="text-decoration-none" to={"/login"}>
+                  <Link
+                    className="text-decoration-none text-danger"
+                    to={"/login"}
+                  >
                     Войти
                   </Link>
                 </div>

@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import NavBar from "./Components/navigation/navBar";
-import { Redirect, Route, Switch, useHistory } from "react-router-dom";
+import { Redirect, Route, Switch, useLocation } from "react-router-dom";
 import MainPage from "./Components/pages/mainPage";
 import MansPage from "./Components/pages/mansPage";
 import WomanPage from "./Components/pages/womanPage";
@@ -12,9 +12,17 @@ import Login from "./Components/pages/login";
 
 const App: React.FC = () => {
   //  check login status and delete navBar in some cases
+
+  let location: any = useLocation();
+
+  const [isLogin, setIsLogin] = useState(false);
+
+  useEffect(() => {
+    location.pathname === "/login" ? setIsLogin(true) : setIsLogin(false);
+  }, [location]);
   return (
     <>
-      <NavBar />
+      {!isLogin && <NavBar />}
       <Switch>
         <Route exact path="/login" component={Login} />
         <Route path="/adminPanel" component={AdminPanel} />
