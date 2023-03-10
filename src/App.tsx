@@ -1,6 +1,6 @@
 import React from "react";
 import NavBar from "./Components/navigation/navBar";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch, useHistory } from "react-router-dom";
 import MainPage from "./Components/pages/mainPage";
 import MansPage from "./Components/pages/mansPage";
 import WomanPage from "./Components/pages/womanPage";

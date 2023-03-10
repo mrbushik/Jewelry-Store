@@ -1,26 +1,38 @@
-import React from "react";
-import { useParams } from "react-router-dom";
-// import LoginForm from '../ui/loginForm';
-// import RegisterForm from '../ui/registerForm';
+import React, { useEffect } from "react";
+import { useParams, useHistory } from "react-router-dom";
+import LoginForm from "../ui/login";
+import RegisterForm from "../ui/registerForm";
+import { useSelector } from "react-redux";
 
 const Login: React.FC = ({ ...rest }) => {
+  const { type }: any = useParams();
+  const history = useHistory();
+
+  const authStatus: any = useSelector((state: any) => state.auth.auth);
   const [userslist, setUsersList] = React.useState();
+
+  useEffect(() => {
+    if (authStatus) history.push("/");
+  }, [authStatus]);
+
   React.useEffect(() => {
     fetch(
-      "https://task4-2cc24-default-rtdb.europe-west1.firebasedatabase.app/users.json"
+      "https://jewelry-store-3488f-default-rtdb.europe-west1.firebasedatabase.app/users.json"
     )
       .then((response) => response.json())
       .then((json) => setUsersList(json));
   }, []);
-  const { type }: any = useParams();
+
   const [formType, setFormType] = React.useState(
     type === "register" ? type : "login"
   );
-  const togleFormType = () => {
+
+  const toggleFormType = () => {
     setFormType((pervState: any) =>
       pervState === "register" ? "login" : "register"
     );
   };
+
   return (
     <>
       <div className="container mt-5">
@@ -28,19 +40,27 @@ const Login: React.FC = ({ ...rest }) => {
           <div className="col-md-6 offset-md-3 shadow p-4">
             {formType === "register" ? (
               <>
-                <h3 className="mb-4">Register</h3>
-                <RegisterForm {...rest} usersList={userslist} />
-                <p>Already have account?</p>{" "}
-                <a role="button" onClick={togleFormType}>
-                  Sing In
+                <h3 className="mb-4">Регистрация</h3>
+                <RegisterForm usersList={userslist} />
+                <p className="mt-1 mb-1">Уже есть аккаунт?</p>
+                <a
+                  role="button "
+                  className="login__switch"
+                  onClick={toggleFormType}
+                >
+                  Войти
                 </a>
               </>
             ) : (
               <>
-                <h3 className="mb-4">Login</h3>
-                <LoginForm {...rest} usersList={userslist} />
-                <a role="button" onClick={togleFormType}>
-                  Sing Un
+                <h3 className="mb-4">Вход</h3>
+                <LoginForm usersList={userslist} />
+                <a
+                  role="button "
+                  className="login__switch"
+                  onClick={toggleFormType}
+                >
+                  Зарегестрироваться
                 </a>
               </>
             )}

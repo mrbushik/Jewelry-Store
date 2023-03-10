@@ -25,8 +25,9 @@ const TextField: React.FC<textFieldProps> = ({
   return (
     <div className="mb-3">
       <div className="input-group has-validation">
-        <label>{label}</label>
+        <p className="d-block mb-1">{label}</p>
         <input
+          className="text-field"
           placeholder={placeholder ? placeholder : ""}
           id={name}
           type={type === "password" ? type : "text"}

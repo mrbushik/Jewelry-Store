@@ -2,16 +2,14 @@ import React from "react";
 import TextField from "../form/textField";
 import { useDispatch } from "react-redux";
 import { isAuth, userData } from "../redux/actions/auth";
-const dispatch: any = useDispatch();
 
 type loginInterface = {
   usersList: any;
-  onEmail: string;
 };
 
 // TO DO: if i have time typifying this
 
-const LoginForm: React.FC<loginInterface> = ({ usersList, onEmail }) => {
+const LoginForm: React.FC<loginInterface> = ({ usersList }) => {
   const dispatch: any = useDispatch();
   const [data, setData] = React.useState<any>({
     email: "",
@@ -30,6 +28,7 @@ const LoginForm: React.FC<loginInterface> = ({ usersList, onEmail }) => {
       ["lastLoginDate"]: dateNow,
     }));
   };
+
   const getLoginObject = (id: string, email: string) => {
     let arr: any = loginUserData;
     arr.push({ id: id, email: email });
@@ -42,7 +41,7 @@ const LoginForm: React.FC<loginInterface> = ({ usersList, onEmail }) => {
     let targetIndex: any = loginUserData.findIndex(
       (item: any) => item.email === data.email
     );
-    console.log(loginUserData[targetIndex].id);
+
     if (targetIndex !== -1) {
       let myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
@@ -59,17 +58,28 @@ const LoginForm: React.FC<loginInterface> = ({ usersList, onEmail }) => {
       };
 
       fetch(
-        `https://task4-2cc24-default-rtdb.europe-west1.firebasedatabase.app/users/${loginUserData[targetIndex].id}.json`,
+        `https://jewelry-store-3488f-default-rtdb.europe-west1.firebasedatabase.app/users/${loginUserData[targetIndex].id}.json`,
         requestOptions
       )
         .then((response) => response.text())
         .then((result) => dispatch(isAuth(true)))
-        .then((result) => dispatch(userData(data)))
         .catch((error) => console.log("error", error));
+
+      handleFindTargetUser();
     } else {
       return;
     }
   };
+
+  const handleFindTargetUser = () => {
+    // to do write types
+
+    const targetUser: any = Object.values(usersList).find(
+      (user: any) => user.email === data.email
+    );
+    dispatch(userData(targetUser));
+  };
+
   const submitData = async () => {
     let receivedUsers = Object.values(usersList).map((item) => item);
     let correctEmail = receivedUsers.find(
@@ -80,6 +90,7 @@ const LoginForm: React.FC<loginInterface> = ({ usersList, onEmail }) => {
     );
     if (correctEmail && correctPassword) {
       setCheck(true);
+
       handleSubmitNowDate();
     } else {
       setCheck(false);
@@ -94,6 +105,7 @@ const LoginForm: React.FC<loginInterface> = ({ usersList, onEmail }) => {
       submitData();
     }
   };
+
   return (
     <form onSubmit={handleSubmit}>
       <TextField
@@ -111,9 +123,8 @@ const LoginForm: React.FC<loginInterface> = ({ usersList, onEmail }) => {
         value={data.password}
         onChange={handleChange}
       />
-
       <button className="btn btn-primary w-100 mx-auto" type="submit">
-        Submit
+        Отправить
       </button>
       {check ? (
         ""
