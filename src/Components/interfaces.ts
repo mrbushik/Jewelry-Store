@@ -5,6 +5,7 @@ export interface productItem {
   price: string;
   title: string;
   type: string;
+  weight: string;
 }
 export interface filterProduct {
   price: filterPrice | any;

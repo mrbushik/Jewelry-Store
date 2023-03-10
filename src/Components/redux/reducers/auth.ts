@@ -1,5 +1,6 @@
 const initialState = {
   auth: false,
+  userData: "",
 };
 
 const productData = (state = initialState, action: any) => {
@@ -8,6 +9,12 @@ const productData = (state = initialState, action: any) => {
       return {
         ...state,
         auth: action.payload,
+      };
+
+    case "USER_DATA":
+      return {
+        ...state,
+        userData: action.payload,
       };
 
     default:

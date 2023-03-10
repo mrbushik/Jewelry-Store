@@ -6,18 +6,12 @@ import {
   currentProduct,
   currentProductsRequest,
 } from "../redux/actions/productData";
-import { log } from "util";
 
 const ProductPage: React.FC = () => {
   const params: any = useParams();
   const location = useLocation();
   const history = useHistory();
   const dispatch: any = useDispatch();
-
-  enum metals {
-    gold = "Золото",
-    silver = "Серебро",
-  }
 
   const MANS_JEWELRY_URL =
     "https://jewelry-store-3488f-default-rtdb.europe-west1.firebasedatabase.app/Products/mens.json";
@@ -71,6 +65,7 @@ const ProductPage: React.FC = () => {
           <p className="mt-5">
             Метал: {currentProductData.metal === "gold" ? "Золото" : "Серебро"}
           </p>
+          <p>Вес: {currentProductData.weight} грамм</p>
           <p className="fs-5 mt-3 ">
             Цена:
             <span className="fw-bolder">{currentProductData.price} BYN</span>

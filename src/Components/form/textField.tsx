@@ -6,6 +6,8 @@ type textFieldProps = {
   value: string;
   onChange(target: fieldTarget): void;
   placeholder: string;
+  label?: string;
+  type?: string;
 };
 
 const TextField: React.FC<textFieldProps> = ({
@@ -13,6 +15,8 @@ const TextField: React.FC<textFieldProps> = ({
   onChange,
   value,
   placeholder,
+  label,
+  type,
 }) => {
   const handleChange = (e: any) => {
     onChange({ name: e.target.name, value: e.target.value });
@@ -21,10 +25,11 @@ const TextField: React.FC<textFieldProps> = ({
   return (
     <div className="mb-3">
       <div className="input-group has-validation">
+        <label>{label}</label>
         <input
           placeholder={placeholder ? placeholder : ""}
-          type="text"
           id={name}
+          type={type === "password" ? type : "text"}
           name={name}
           value={value}
           onChange={handleChange}

@@ -12,34 +12,38 @@ const Login: React.FC = ({ ...rest }) => {
       .then((response) => response.json())
       .then((json) => setUsersList(json));
   }, []);
-  // const { type } = useParams();
-  // const [formType, setFormType] = React.useState(type === 'register' ? type : 'login');
-  // const togleFormType = () => {
-  //     setFormType((pervState) => (pervState === 'register' ? 'login' : 'register'));
-  // };
+  const { type }: any = useParams();
+  const [formType, setFormType] = React.useState(
+    type === "register" ? type : "login"
+  );
+  const togleFormType = () => {
+    setFormType((pervState: any) =>
+      pervState === "register" ? "login" : "register"
+    );
+  };
   return (
     <>
       <div className="container mt-5">
         <div className="row">
           <div className="col-md-6 offset-md-3 shadow p-4">
-            {/*{formType === 'register' ? (*/}
-            {/*    <>*/}
-            {/*        <h3 className="mb-4">Register</h3>*/}
-            {/*        <RegisterForm {...rest} usersList={userslist} />*/}
-            {/*        <p>Already have account?</p>{' '}*/}
-            {/*        <a role="button" onClick={togleFormType}>*/}
-            {/*            Sing In*/}
-            {/*        </a>*/}
-            {/*    </>*/}
-            {/*) : (*/}
-            {/*    <>*/}
-            {/*        <h3 className="mb-4">Login</h3>*/}
-            {/*        <LoginForm {...rest} usersList={userslist} />*/}
-            {/*        <a role="button" onClick={togleFormType}>*/}
-            {/*            Sing Un*/}
-            {/*        </a>*/}
-            {/*    </>*/}
-            {/*)}*/}
+            {formType === "register" ? (
+              <>
+                <h3 className="mb-4">Register</h3>
+                <RegisterForm {...rest} usersList={userslist} />
+                <p>Already have account?</p>{" "}
+                <a role="button" onClick={togleFormType}>
+                  Sing In
+                </a>
+              </>
+            ) : (
+              <>
+                <h3 className="mb-4">Login</h3>
+                <LoginForm {...rest} usersList={userslist} />
+                <a role="button" onClick={togleFormType}>
+                  Sing Un
+                </a>
+              </>
+            )}
           </div>
         </div>
       </div>
