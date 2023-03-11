@@ -5,10 +5,8 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import SuccessfulOrder from "../ui/successfulOrder";
 import { deleteProductInCart } from "../redux/actions/cart";
 import axios from "axios";
-import { log } from "util";
-import {IFormInputs} from "../interfaces";
-
-
+import { IFormInputs } from "../interfaces";
+import TextField from "../form/textField";
 
 const OrderPage: React.FC = () => {
   const history = useHistory();
@@ -18,6 +16,7 @@ const OrderPage: React.FC = () => {
 
   const cartPrice = useSelector((state: any) => state.cart.cartPrice);
   const cartItems = useSelector((state: any) => state.cart.cartItems);
+  const userInfo = useSelector((state: any) => state.auth.userData);
 
   const [successfulOrder, setSuccessfulOrder] = useState(false);
 
@@ -43,7 +42,13 @@ const OrderPage: React.FC = () => {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm<IFormInputs>();
+  } = useForm<IFormInputs>({
+    defaultValues: {
+      firstName: userInfo.username,
+      email: userInfo.email,
+      phone: userInfo.phone,
+    },
+  });
 
   const handleGetClass = (error: any) => {
     if (error) return "form-control is-invalid mt-1 ";
@@ -62,6 +67,7 @@ const OrderPage: React.FC = () => {
           <label className="mt-3">Имя</label>
           <input
             {...register("firstName", { required: true })}
+            // placeholder={userInfo.username}
             className={handleGetClass(errors.firstName)}
           />
           {errors.firstName && (
@@ -74,6 +80,7 @@ const OrderPage: React.FC = () => {
               pattern:
                 /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/,
             })}
+            placeholder={userInfo.email}
             className={handleGetClass(errors.email)}
           />
           {errors.email && (
@@ -88,6 +95,7 @@ const OrderPage: React.FC = () => {
               pattern:
                 /^(\+)?((\d{2,3}) ?\d|\d)(([ -]?\d)|( ?(\d{2,3}) ?)){5,12}\d$/,
             })}
+            placeholder={userInfo.phone}
             className={handleGetClass(errors.phone)}
           />
           {errors.phone && (

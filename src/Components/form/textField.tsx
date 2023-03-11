@@ -5,7 +5,7 @@ type textFieldProps = {
   name: string;
   value: string;
   onChange(target: fieldTarget): void;
-  placeholder: string;
+  placeholder?: string;
   label?: string;
   type?: string;
 };
