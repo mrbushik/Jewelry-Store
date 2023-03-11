@@ -7,6 +7,7 @@ import { deleteProductInCart } from "../redux/actions/cart";
 import axios from "axios";
 import { IFormInputs } from "../interfaces";
 import TextField from "../form/textField";
+import TranslationCurrency from "../ui/translationCurrency";
 
 const OrderPage: React.FC = () => {
   const history = useHistory();
@@ -111,9 +112,8 @@ const OrderPage: React.FC = () => {
             >
               Оформить заказ
             </button>
-            <p className="mb-0 ms-3 mt-3">
-              Итого к оплате <span className="fw-semibold">{cartPrice}</span>{" "}
-              BYN
+            <p className="mb-0 ms-3 mt-3 d-flex align-items-center">
+              Итого к оплате <TranslationCurrency price={cartPrice} />
             </p>
           </div>
         </form>

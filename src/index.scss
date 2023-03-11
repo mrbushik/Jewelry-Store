@@ -109,3 +109,18 @@ code {
 .user__nav-nick {
   color: #0d6efd;
 }
+.currency__switch {
+  list-style: none;
+  padding-left: 0;
+  li {
+    cursor: pointer;
+    width: 100%;
+    height: auto;
+    padding: 5px 10px;
+    background: #ccc;
+    margin-left: 15px;
+  }
+}
+.currency__value {
+  width: 70px;
+}
