@@ -16,7 +16,7 @@ const countFullPrice = (items: productItem[]) => {
   return fullPrice;
 };
 
-const handleSaveInStorage = (items: productItem[]) => {
+const handleSaveInStorage = (items: productItem[] | []) => {
   localStorage.setItem("cart", JSON.stringify(items));
 };
 

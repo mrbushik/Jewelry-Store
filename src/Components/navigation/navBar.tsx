@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { isAuth, userData } from "../redux/actions/auth";
+import { deleteProductInCart } from "../redux/actions/cart";
 
 const NavBar: React.FC = () => {
   const dispatch = useDispatch();
@@ -10,11 +11,11 @@ const NavBar: React.FC = () => {
   const [authStatus, setAuthStatus] = React.useState(!authInfo);
 
   const userName = useSelector((state: any) => state.auth.userData);
-  console.log(userName);
 
   const handleClearSession = () => {
     dispatch(isAuth(false));
     dispatch(userData(""));
+    dispatch(deleteProductInCart([]));
   };
 
   return (

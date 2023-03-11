@@ -1,6 +1,22 @@
+import { productItem } from "../../interfaces";
+
+const authStatus: string | null = localStorage.getItem("authStatus");
+const userInfo: string | null = localStorage.getItem("userInfo");
+
 const initialState = {
-  auth: false,
-  userData: "",
+  auth: authStatus === "true",
+  userData: userInfo ? userInfo : "",
+};
+
+const handleWriteAuthStatus = (status: boolean) => {
+  localStorage.setItem("authStatus", status.toString());
+  console.log(status);
+  return status;
+};
+
+const handleWriteUserInfo = (items: any) => {
+  localStorage.setItem("userInfo", JSON.stringify(items));
+  return items;
 };
 
 const productData = (state = initialState, action: any) => {
@@ -8,13 +24,13 @@ const productData = (state = initialState, action: any) => {
     case "IS_AUTH":
       return {
         ...state,
-        auth: action.payload,
+        auth: handleWriteAuthStatus(action.payload),
       };
 
     case "USER_DATA":
       return {
         ...state,
-        userData: action.payload,
+        userData: handleWriteUserInfo(action.payload),
       };
 
     default:
