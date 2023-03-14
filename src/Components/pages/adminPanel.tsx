@@ -11,7 +11,8 @@ const AdminPanel: React.FC = () => {
   const dispatch: any = useDispatch();
   const allOrders = useSelector((state: any) => state.productData.orders);
   const [adminRights, setAdminRights] = useState<boolean>(false);
-  const [field, setField] = useState({ password: "", error: "" });
+  const [field, setField] = useState({ password: "" });
+  const [errors, setErrors] = useState(false);
 
   const allOrdersKeys = Object.keys(allOrders);
   const password = "111111";
@@ -40,20 +41,15 @@ const AdminPanel: React.FC = () => {
   };
 
   const handleChange = (target: any) => {
+    console.log(target.name);
     setField((prevState) => ({
       ...prevState,
       [target.name]: target.value,
     }));
-
   };
 
   const handleSubmit = () => {
-    field.password === password
-      ? setAdminRights(true)
-      : setField((prevState) => ({
-          ...prevState,
-          [password]: true,
-        }));
+    field.password === password ? setAdminRights(true) : setErrors(true);
   };
 
   return (
@@ -75,14 +71,20 @@ const AdminPanel: React.FC = () => {
           )}
         </div>
       ) : (
-        <form onSubmit={handleSubmit}>
-          <h2>Введите пароль</h2>
+        <div className="admin__password_form">
+          <h2 className="mb-4">Введите пароль</h2>
           <TextField
             name="password"
             value={field.password}
             onChange={handleChange}
           />
-        </form>
+          {errors && (
+            <p className="text-danger mt-1">Ошибка при вводе пароля</p>
+          )}
+          <div className="btn btn-primary mt-2" onClick={handleSubmit}>
+            Отправить
+          </div>
+        </div>
       )}
     </div>
   );
