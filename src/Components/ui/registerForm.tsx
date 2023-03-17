@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TextField from "../form/textField";
 import { useDispatch } from "react-redux";
 import { isAuth, userData } from "../redux/actions/auth";
+import { validator } from "../utils/validator";
 
 type loginInterface = {
   usersList: any;
@@ -18,6 +19,7 @@ const RegisterForm: React.FC<loginInterface> = ({ usersList }) => {
     lastLoginDate: "",
     registrDate: "",
   });
+  const [errors, setErrors] = useState({ email: "", password: "", name: "" });
   const [check, setCheck] = React.useState({
     status: true,
     massage: "",
@@ -29,10 +31,42 @@ const RegisterForm: React.FC<loginInterface> = ({ usersList }) => {
       ["_id"]: randomInteger(100000000, 999999999),
     }));
   }, []);
+
   function randomInteger(min: number, max: number) {
     let rand = min - 0.5 + Math.random() * (max - min + 1);
     return Math.round(rand);
   }
+
+  const validatorConfig = {
+    password: {
+      isRequired: {
+        message: "Это обязаельное поле",
+      },
+    },
+    email: {
+      isRequired: {
+        message: "Это обязаельное поле",
+      },
+      isEmail: {
+        message: "почта введена не правильно",
+      },
+    },
+    name: {
+      isRequired: {
+        message: "Это обязаельное поле",
+      },
+    },
+  };
+
+  const validate = () => {
+    const errors: any = validator(data, validatorConfig);
+    setErrors(errors);
+    return !Object.keys(errors).length;
+  };
+
+  useEffect(() => {
+    validate();
+  }, [data]);
 
   const handleChange = (target: any) => {
     const dateNow = Date().toString().substring(4, 24);
@@ -95,6 +129,8 @@ const RegisterForm: React.FC<loginInterface> = ({ usersList }) => {
     }
   };
 
+  const isValid = !Object.keys(errors).length;
+
   return (
     <form onSubmit={handleSubmit}>
       <TextField
@@ -102,6 +138,7 @@ const RegisterForm: React.FC<loginInterface> = ({ usersList }) => {
         label="почта"
         name="email"
         value={data.email}
+        error={errors?.email}
         onChange={handleChange}
       />
       <TextField
@@ -109,6 +146,7 @@ const RegisterForm: React.FC<loginInterface> = ({ usersList }) => {
         label="Ваше имя"
         name="name"
         value={data.name}
+        error={errors?.name}
         onChange={handleChange}
       />
       <TextField
@@ -116,10 +154,15 @@ const RegisterForm: React.FC<loginInterface> = ({ usersList }) => {
         label="Пароль"
         type="password"
         name="password"
+        error={errors?.password}
         value={data.password}
         onChange={handleChange}
       />
-      <button className="btn btn-primary w-100 mx-auto" type="submit">
+      <button
+        className="btn btn-primary w-100 mx-auto"
+        type="submit"
+        disabled={!isValid}
+      >
         Отправить
       </button>
       {check.status ? "" : <p className="text-danger">{check.massage}</p>}

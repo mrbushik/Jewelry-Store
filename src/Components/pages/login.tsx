@@ -38,34 +38,32 @@ const Login: React.FC = ({ ...rest }) => {
       <div className="container mt-5">
         <div className="row">
           <div className="col-md-6 offset-md-3 shadow p-4">
-            <form className="grey-element">
-              {formType === "register" ? (
-                <>
-                  <h3 className="mb-4">Регистрация</h3>
-                  <RegisterForm usersList={userslist} />
-                  <p className="mt-1 mb-1">Уже есть аккаунт?</p>
-                  <a
-                    role="button "
-                    className="login__switch"
-                    onClick={toggleFormType}
-                  >
-                    Войти
-                  </a>
-                </>
-              ) : (
-                <>
-                  <h3 className="mb-4">Вход</h3>
-                  <LoginForm usersList={userslist} />
-                  <a
-                    role="button "
-                    className="login__switch"
-                    onClick={toggleFormType}
-                  >
-                    Зарегестрироваться
-                  </a>
-                </>
-              )}
-            </form>
+            {formType === "register" ? (
+              <>
+                <h3 className="mb-4">Регистрация</h3>
+                <RegisterForm usersList={userslist} />
+                <p className="mt-1 mb-1">Уже есть аккаунт?</p>
+                <a
+                  role="button "
+                  className="login__switch"
+                  onClick={toggleFormType}
+                >
+                  Войти
+                </a>
+              </>
+            ) : (
+              <>
+                <h3 className="mb-4">Вход</h3>
+                <LoginForm usersList={userslist} />
+                <a
+                  role="button "
+                  className="login__switch"
+                  onClick={toggleFormType}
+                >
+                  Зарегестрироваться
+                </a>
+              </>
+            )}
           </div>
         </div>
       </div>

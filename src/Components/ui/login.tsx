@@ -135,6 +135,8 @@ const LoginForm: React.FC<loginInterface> = ({ usersList }) => {
     }
   };
 
+  const isValid = !Object.keys(errors).length;
+
   return (
     <form onSubmit={handleSubmit}>
       <TextField
@@ -154,7 +156,11 @@ const LoginForm: React.FC<loginInterface> = ({ usersList }) => {
         onChange={handleChange}
         error={errors?.password}
       />
-      <button className="btn btn-primary w-100 mx-auto" type="submit">
+      <button
+        className="btn btn-primary w-100 mx-auto"
+        type="submit"
+        disabled={!isValid}
+      >
         Отправить
       </button>
       {check ? (
@@ -164,7 +170,6 @@ const LoginForm: React.FC<loginInterface> = ({ usersList }) => {
           произошла ошибка заполните данные правильно
         </p>
       )}
-
     </form>
   );
 };
