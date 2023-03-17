@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { debuglog, log } from "util";
+import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { allOrdersRequest } from "../redux/actions/productData";
 import { orderItem } from "../interfaces";
@@ -9,7 +9,9 @@ import TextField from "../form/textField";
 
 const AdminPanel: React.FC = () => {
   const dispatch: any = useDispatch();
+  const history = useHistory();
   const allOrders = useSelector((state: any) => state.productData.orders);
+  const userInfo = useSelector((state: any) => state.auth.userData);
   const [adminRights, setAdminRights] = useState<boolean>(false);
   const [field, setField] = useState({ password: "" });
   const [errors, setErrors] = useState(false);
@@ -22,6 +24,7 @@ const AdminPanel: React.FC = () => {
   const handleUpdate = () => dispatch(allOrdersRequest(ORDERS_URL));
 
   useEffect(() => {
+    if (userInfo.statusUser !== "ADMIN") history.push("/");
     handleUpdate();
   }, []);
 
@@ -41,7 +44,6 @@ const AdminPanel: React.FC = () => {
   };
 
   const handleChange = (target: any) => {
-    console.log(target.name);
     setField((prevState) => ({
       ...prevState,
       [target.name]: target.value,
