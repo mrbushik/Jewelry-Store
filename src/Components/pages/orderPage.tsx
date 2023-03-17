@@ -6,7 +6,6 @@ import SuccessfulOrder from "../ui/successfulOrder";
 import { deleteProductInCart } from "../redux/actions/cart";
 import axios from "axios";
 import { IFormInputs } from "../interfaces";
-import TextField from "../form/textField";
 import TranslationCurrency from "../ui/translationCurrency";
 
 const OrderPage: React.FC = () => {
@@ -20,9 +19,14 @@ const OrderPage: React.FC = () => {
   const userInfo = useSelector((state: any) => state.auth.userData);
 
   const [successfulOrder, setSuccessfulOrder] = useState(false);
+  const [checkAuth, setCheckAuth] = useState(false);
 
   useEffect(() => {
     if (!cartItems.length) history.push("/cart");
+  }, []);
+
+  useEffect(() => {
+    if (userInfo) setCheckAuth(true);
   }, []);
 
   const getSubmitData = (userData: IFormInputs) => {
@@ -56,69 +60,82 @@ const OrderPage: React.FC = () => {
     return "form-control mt-1";
   };
 
-
-
   return (
     <div>
       <Link to="/cart" className="btn btn-secondary m-3">
         Назад
       </Link>
-      {successfulOrder ? (
-        <SuccessfulOrder />
+      {checkAuth ? (
+        <div>
+          {successfulOrder ? (
+            <SuccessfulOrder />
+          ) : (
+            <form onSubmit={handleSubmit(onSubmit)} className="order-form">
+              <label className="mt-3">Имя</label>
+              <input
+                {...register("firstName", { required: true })}
+                // placeholder={userInfo.username}
+                className={handleGetClass(errors.firstName)}
+              />
+              {errors.firstName && (
+                <span className="invalid-feedback text-danger">
+                  Имя не введено
+                </span>
+              )}
+              <label className="mt-3">Электронная почта</label>
+              <input
+                {...register("email", {
+                  required: true,
+                  pattern:
+                    /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/,
+                })}
+                placeholder={userInfo.email}
+                className={handleGetClass(errors.email)}
+              />
+              {errors.email && (
+                <span className="invalid-feedback text-danger">
+                  Введите почту правильно
+                </span>
+              )}
+              <label className="mt-3">Номер телефона</label>
+              <input
+                {...register("phone", {
+                  required: true,
+                  pattern:
+                    /^(\+)?((\d{2,3}) ?\d|\d)(([ -]?\d)|( ?(\d{2,3}) ?)){5,12}\d$/,
+                })}
+                placeholder={userInfo.phone}
+                className={handleGetClass(errors.phone)}
+              />
+              {errors.phone && (
+                <span className="invalid-feedback text-danger">
+                  Введите мобильный номер правильно
+                </span>
+              )}
+              <div className="d-flex flex-wrap align-items-center mt-3">
+                <button
+                  type="submit"
+                  className="btn btn-primary ms-3 mt-3"
+                  disabled={Object.keys(errors).length !== 0}
+                >
+                  Оформить заказ
+                </button>
+                <span className="mb-0 ms-3 mt-3 d-flex align-items-center">
+                  Итого к оплате <TranslationCurrency price={cartPrice} />
+                </span>
+              </div>
+            </form>
+          )}
+        </div>
       ) : (
-        <form onSubmit={handleSubmit(onSubmit)} className="order-form">
-          <label className="mt-3">Имя</label>
-          <input
-            {...register("firstName", { required: true })}
-            // placeholder={userInfo.username}
-            className={handleGetClass(errors.firstName)}
-          />
-          {errors.firstName && (
-            <p className="invalid-feedback text-danger">Имя не введено</p>
-          )}
-          <label className="mt-3">Электронная почта</label>
-          <input
-            {...register("email", {
-              required: true,
-              pattern:
-                /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/,
-            })}
-            placeholder={userInfo.email}
-            className={handleGetClass(errors.email)}
-          />
-          {errors.email && (
-            <p className="invalid-feedback text-danger">
-              Введите почту правильно
-            </p>
-          )}
-          <label className="mt-3">Номер телефона</label>
-          <input
-            {...register("phone", {
-              required: true,
-              pattern:
-                /^(\+)?((\d{2,3}) ?\d|\d)(([ -]?\d)|( ?(\d{2,3}) ?)){5,12}\d$/,
-            })}
-            placeholder={userInfo.phone}
-            className={handleGetClass(errors.phone)}
-          />
-          {errors.phone && (
-            <p className="invalid-feedback text-danger">
-              Введите мобильный номер правильно
-            </p>
-          )}
-          <div className="d-flex flex-wrap align-items-center mt-3">
-            <button
-              type="submit"
-              className="btn btn-primary ms-3 mt-3"
-              disabled={Object.keys(errors).length !== 0}
-            >
-              Оформить заказ
-            </button>
-            <p className="mb-0 ms-3 mt-3 d-flex align-items-center">
-              Итого к оплате <TranslationCurrency price={cartPrice} />
-            </p>
-          </div>
-        </form>
+        <div className="m-4 ">
+          <h2 className="order__page-error mb-4">
+            Для заказа требуется зарегестрироваться или войти в аккаунт
+          </h2>
+          <Link to="/login" className="order__page-error-link">
+            Войти или зарегестрироваться
+          </Link>
+        </div>
       )}
     </div>
   );

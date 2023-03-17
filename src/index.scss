@@ -132,3 +132,17 @@ code {
 .w-80 {
   width: 80%;
 }
+
+.order__page-error {
+  text-align: center;
+  width: fit-content;
+  margin: 0 auto;
+  font-weight: 500;
+}
+
+.order__page-error-link {
+  text-decoration: none;
+  display: block;
+  text-align: center;
+  font-size: 18px;
+}
