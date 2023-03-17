@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TextField from "../form/textField";
 import { useDispatch } from "react-redux";
+import { validator } from "../utils/validator";
 import { isAuth, userData } from "../redux/actions/auth";
 
 type loginInterface = {
@@ -11,11 +12,39 @@ type loginInterface = {
 
 const LoginForm: React.FC<loginInterface> = ({ usersList }) => {
   const dispatch: any = useDispatch();
+  const [errors, setErrors] = useState({ email: "", password: "" });
   const [data, setData] = React.useState<any>({
     email: "",
     password: "",
     lastLoginDate: "",
   });
+
+  const validatorConfig = {
+    password: {
+      isRequired: {
+        message: "Это обязаельное поле",
+      },
+    },
+    email: {
+      isRequired: {
+        message: "Это обязаельное поле",
+      },
+      isEmail: {
+        message: "почта введена не правильно",
+      },
+    },
+  };
+
+  const validate = () => {
+    const errors: any = validator(data, validatorConfig);
+    setErrors(errors);
+    return !Object.keys(errors).length;
+  };
+
+  useEffect(() => {
+    validate();
+  }, [data]);
+
   const [loginUserData, setLoginUserData] = React.useState<any>([]);
   const [check, setCheck] = React.useState(true);
 
@@ -113,6 +142,7 @@ const LoginForm: React.FC<loginInterface> = ({ usersList }) => {
         name="email"
         value={data.email}
         placeholder={"ваша почта"}
+        error={errors?.email}
         onChange={handleChange}
       />
       <TextField
@@ -122,6 +152,7 @@ const LoginForm: React.FC<loginInterface> = ({ usersList }) => {
         placeholder={"пароль"}
         value={data.password}
         onChange={handleChange}
+        error={errors?.password}
       />
       <button className="btn btn-primary w-100 mx-auto" type="submit">
         Отправить
@@ -133,6 +164,7 @@ const LoginForm: React.FC<loginInterface> = ({ usersList }) => {
           произошла ошибка заполните данные правильно
         </p>
       )}
+
     </form>
   );
 };
