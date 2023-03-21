@@ -17,7 +17,7 @@ const Login: React.FC = ({ ...rest }) => {
 
   React.useEffect(() => {
     fetch(
-      "https://jewelry-store-3488f-default-rtdb.europe-west1.firebasedatabase.app/users.json"
+      `${process.env.REACT_APP_DOMAIN_NAME}/users.json`
     )
       .then((response) => response.json())
       .then((json) => setUsersList(json));

@@ -87,7 +87,7 @@ const LoginForm: React.FC<loginInterface> = ({ usersList }) => {
       };
 
       fetch(
-        `https://jewelry-store-3488f-default-rtdb.europe-west1.firebasedatabase.app/users/${loginUserData[targetIndex].id}.json`,
+        `${process.env.REACT_APP_DOMAIN_NAME}/users/${loginUserData[targetIndex].id}.json`,
         requestOptions
       )
         .then((response) => response.text())

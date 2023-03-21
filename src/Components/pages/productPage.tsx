@@ -13,10 +13,8 @@ const ProductPage: React.FC = () => {
   const history = useHistory();
   const dispatch: any = useDispatch();
 
-  const MANS_JEWELRY_URL =
-    "https://jewelry-store-3488f-default-rtdb.europe-west1.firebasedatabase.app/Products/mens.json";
-  const WOMAN_JEWELRY_URL: string =
-    "https://jewelry-store-3488f-default-rtdb.europe-west1.firebasedatabase.app/Products/woman.json";
+  const MANS_JEWELRY_URL: string = `${process.env.REACT_APP_DOMAIN_NAME}/mens.json`;
+  const WOMAN_JEWELRY_URL: string = `${process.env.REACT_APP_DOMAIN_NAME}/Products/woman`;
 
   const mansJewelryItems: productItem[] = useSelector(
     (state: any) => state.productData.mensJewelry

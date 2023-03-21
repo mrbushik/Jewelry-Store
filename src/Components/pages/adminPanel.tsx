@@ -18,8 +18,7 @@ const AdminPanel: React.FC = () => {
 
   const allOrdersKeys = Object.keys(allOrders);
   const password = "111111";
-  const ORDERS_URL =
-    "https://jewelry-store-3488f-default-rtdb.europe-west1.firebasedatabase.app/orders/.json";
+  const ORDERS_URL = `${process.env.REACT_APP_DOMAIN_NAME}/orders/.json`;
 
   const handleUpdate = () => dispatch(allOrdersRequest(ORDERS_URL));
 

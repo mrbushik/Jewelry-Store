@@ -10,8 +10,7 @@ const WomanPage: React.FC = () => {
   const womanJewelryItems: productItem[] = useSelector(
     (state: any) => state.productData.womanJewelry
   );
-  const womanJewelryURL: string =
-    "https://jewelry-store-3488f-default-rtdb.europe-west1.firebasedatabase.app/Products/woman.json";
+  const womanJewelryURL: string = `${process.env.REACT_APP_DOMAIN_NAME}/Products/woman.json`;
 
   const [womanFilterProducts, setWomanFilterProducts] =
     useState<productItem[]>(womanJewelryItems);

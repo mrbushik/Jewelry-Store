@@ -11,8 +11,7 @@ import TranslationCurrency from "../ui/translationCurrency";
 const OrderPage: React.FC = () => {
   const history = useHistory();
   const dispatch: any = useDispatch();
-  const SEND_ORDER_URL =
-    "https://jewelry-store-3488f-default-rtdb.europe-west1.firebasedatabase.app/orders/.json";
+  const SEND_ORDER_URL = `${process.env.REACT_APP_DOMAIN_NAME}/orders/.json`;
 
   const cartPrice = useSelector((state: any) => state.cart.cartPrice);
   const cartItems = useSelector((state: any) => state.cart.cartItems);

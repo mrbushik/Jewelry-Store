@@ -78,16 +78,13 @@ const RegisterForm: React.FC<loginInterface> = ({ usersList }) => {
     }));
   };
   const submitData = async () => {
-    await fetch(
-      "https://jewelry-store-3488f-default-rtdb.europe-west1.firebasedatabase.app/users.json",
-      {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
-      }
-    )
+    await fetch(`${process.env.REACT_APP_DOMAIN_NAME}/users.json`, {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
       .then((response) => response.json())
       .then((json) => dispatch(userData(data)))
       .then((json) => dispatch(isAuth(true)));

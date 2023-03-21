@@ -13,8 +13,7 @@ const MansPage: React.FC = () => {
   const [filteredProducts, setFilteredProducts] =
     useState<productItem[]>(mansJewelryItems);
 
-  const mansJewelryURL =
-    "https://jewelry-store-3488f-default-rtdb.europe-west1.firebasedatabase.app/Products/mens.json";
+  const mansJewelryURL: string = `${process.env.REACT_APP_DOMAIN_NAME}/Products/mens.json`;
 
   useEffect(() => {
     dispatch(mensJewelryRequest(mansJewelryURL));
