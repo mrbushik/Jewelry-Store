@@ -7,6 +7,7 @@ type selectedFieldProps = {
   defaultOption: string;
   options: filterPrice[];
   name: string;
+  label?: string;
 };
 
 const SelectedField: React.FC<selectedFieldProps> = ({
@@ -15,8 +16,12 @@ const SelectedField: React.FC<selectedFieldProps> = ({
   defaultOption,
   options,
   name,
+    label,
 }) => {
   const handleChange = (event: any) => {
+    console.log(
+      options.find((item: filterPrice) => item.name === event.target.value)
+    );
     onChange({
       name: event.target.name,
       value: options.find(
@@ -31,7 +36,7 @@ const SelectedField: React.FC<selectedFieldProps> = ({
 
   return (
     <div className="mb-3">
-      <label htmlFor={name} className="form-label"></label>
+      <label htmlFor={name} className="form-label">{label}</label>
       <select
         className={getInputClasses()}
         id={name}

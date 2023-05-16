@@ -14,7 +14,7 @@ export interface filterProduct {
 
 export interface filterPrice {
   name: string;
-  value: boolean;
+  value: boolean | string;
 }
 
 export interface productFilters {
