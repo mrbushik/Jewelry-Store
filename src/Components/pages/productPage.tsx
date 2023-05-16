@@ -34,7 +34,7 @@ const ProductPage: React.FC = () => {
   const getMansProducts = () => {
     if (mansJewelryItems.length)
       return dispatch(currentProduct(mansJewelryItems[params.Id]));
-    dispatch(currentProductsRequest(MANS_JEWELRY_URL, params.Id));
+
   };
 
   const getWomanProducts = () => {

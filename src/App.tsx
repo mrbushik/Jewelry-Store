@@ -9,6 +9,7 @@ import OrderPage from "./Components/pages/orderPage";
 import AdminPanel from "./Components/pages/adminPanel";
 import ProductPage from "./Components/pages/productPage";
 import Login from "./Components/pages/login";
+import AdminProducts from "./Components/pages/adminProducts";
 
 const App: React.FC = () => {
   //  check login status and delete navBar in some cases
@@ -27,6 +28,7 @@ const App: React.FC = () => {
       {!isLogin && <NavBar />}
       <Switch>
         <Route exact path="/login" component={Login} />
+        <Route path="/adminProducts" component={AdminProducts} />
         <Route path="/adminPanel" component={AdminPanel} />
         <Route path="/order" component={OrderPage} />
         <Route path="/cart" component={Cart} />
