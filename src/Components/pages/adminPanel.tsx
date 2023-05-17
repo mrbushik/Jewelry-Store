@@ -6,6 +6,7 @@ import { allOrdersRequest } from "../redux/actions/productData";
 import { orderItem } from "../interfaces";
 import OrderRender from "../ui/orderRender";
 import TextField from "../form/textField";
+import { validator } from "../utils/validator";
 
 const AdminPanel: React.FC = () => {
   const dispatch: any = useDispatch();

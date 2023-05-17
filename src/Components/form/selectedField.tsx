@@ -8,6 +8,7 @@ type selectedFieldProps = {
   options: filterPrice[];
   name: string;
   label?: string;
+  error?: string;
 };
 
 const SelectedField: React.FC<selectedFieldProps> = ({
@@ -16,7 +17,8 @@ const SelectedField: React.FC<selectedFieldProps> = ({
   defaultOption,
   options,
   name,
-    label,
+  label,
+  error,
 }) => {
   const handleChange = (event: any) => {
     console.log(
@@ -31,12 +33,14 @@ const SelectedField: React.FC<selectedFieldProps> = ({
   };
 
   const getInputClasses = () => {
-    return "form-select";
+    return 'form-select' + (error ? ' is-invalid' : '');
   };
 
   return (
     <div className="mb-3">
-      <label htmlFor={name} className="form-label">{label}</label>
+      <label htmlFor={name} className="form-label">
+        {label}
+      </label>
       <select
         className={getInputClasses()}
         id={name}
@@ -53,6 +57,7 @@ const SelectedField: React.FC<selectedFieldProps> = ({
           </option>
         ))}
       </select>
+      {error && <p className="invalid-feedback text-danger">{error}</p>}
     </div>
   );
 };

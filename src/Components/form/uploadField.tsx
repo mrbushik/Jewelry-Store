@@ -36,7 +36,7 @@ const UploadField: React.FC<uploadInterface> = ({ name, onSave, isUrl }) => {
     );
 
     const file = await res.json();
-    setPhotoUrl({ name: "photoUrl", value: file.secure_url });
+    setPhotoUrl({ name: "imageLink", value: file.secure_url });
   }
 
   const uploadImage = async (e: any) => {
@@ -61,7 +61,8 @@ const UploadField: React.FC<uploadInterface> = ({ name, onSave, isUrl }) => {
   };
   return (
     <>
-      <div className="input-group">
+      <p>Загрузите фото 250px на 250px</p>
+      <div className="input-group d-flex">
         <input
           name={name}
           type="file"
@@ -77,7 +78,7 @@ const UploadField: React.FC<uploadInterface> = ({ name, onSave, isUrl }) => {
         >
           Прикрепить
         </button>
-        {!isUrl && <p className="invalid-feedback text-danger">ошибка</p>}
+        {!isUrl && <p className="invalid-feedback text-danger">Прикрепите фото</p>}
       </div>
       {errors && <div className="text-danger">{errors}</div>}
       {loading && <div className="lds-dual-ring "></div>}

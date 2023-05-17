@@ -101,7 +101,6 @@ const LoginForm: React.FC<loginInterface> = ({ usersList }) => {
   };
 
   const handleFindTargetUser = () => {
-    // to do write types
 
     const targetUser: any = Object.values(usersList).find(
       (user: any) => user.email === data.email

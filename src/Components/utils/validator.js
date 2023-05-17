@@ -1,4 +1,5 @@
 export function validator(data, config) {
+  console.log(data);
   const errors = {};
   function validate(validateMethod, data, config) {
     let statusValidate;
@@ -9,6 +10,10 @@ export function validator(data, config) {
         } else {
           statusValidate = data.trim() === "";
         }
+        break;
+      }
+      case "isRequiredSelect": {
+        statusValidate = !data;
         break;
       }
       case "isEmail": {

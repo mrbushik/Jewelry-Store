@@ -7,12 +7,11 @@ import {
   mensJewelryRequest,
   womanJewelryRequest,
 } from "../redux/actions/productData";
-import { ALL } from "dns";
-import { log } from "util";
 import { productItem } from "../interfaces";
 import ProductRender from "../ui/productRender";
 import ProductsForEditRender from "../ui/productsForEditRender";
 import AddProductForm from "../ui/addProductForm";
+import { validator } from "../utils/validator";
 
 type CategoryType = "" | "man" | "woman";
 
@@ -33,15 +32,26 @@ const AdminProducts: React.FC = () => {
 
   const [allProducts, setAllProducts] = useState<any>();
   const [category, setCategory] = useState<CategoryType>();
+  const [errors, setErrors] = useState({ email: "", password: "" });
   const [collection, setCollection] = useState({
     title: "",
     imageLink: "",
     category: "",
     metal: "",
     price: "",
-    type: "",
     weight: "",
   });
+
+  const handleCleanForm = () => {
+    setCollection({
+      title: "",
+      imageLink: "",
+      category: "",
+      metal: "",
+      price: "",
+      weight: "",
+    });
+  };
 
   const handleChange = (target: any) => {
     setCollection((prevState) => ({
@@ -50,15 +60,55 @@ const AdminProducts: React.FC = () => {
     }));
   };
 
+  const validatorConfig = {
+    title: {
+      isRequired: {
+        message: "Это обязаельное поле",
+      },
+    },
+    metal: {
+      isRequiredSelect: {
+        message: "Это обязаельное поле",
+      },
+    },
+    category: {
+      isRequiredSelect: {
+        message: "Это обязаельное поле",
+      },
+    },
+    price: {
+      isRequired: {
+        message: "Это обязаельное поле",
+      },
+    },
+    imageLink: {
+      isRequired: {
+        message: "Это обязаельное поле",
+      },
+    },
+    weight: {
+      isRequired: {
+        message: "Это обязаельное поле",
+      },
+    },
+  };
+
+  const validate = () => {
+    const errors: any = validator(collection, validatorConfig);
+    setErrors(errors);
+    return !Object.keys(errors).length;
+  };
+
+  useEffect(() => {
+    validate();
+  }, [collection]);
+
   useEffect(() => {
     if (userInfo.statusUser !== "ADMIN") history.push("/");
     dispatch(womanJewelryRequest(womanJewelryURL));
     dispatch(mensJewelryRequest(mansJewelryURL));
   }, []);
 
-  if (allProducts) {
-    // console.log(allProducts.map((item: any) => Object.values(item)));
-  }
   const handleChangeCategory = (category: CategoryType) =>
     setCategory(category);
 
@@ -70,17 +120,22 @@ const AdminProducts: React.FC = () => {
     const targetProducts: productItem[] = mansJewelryItems.filter(
       (item: productItem) => item.imageLink !== imageUrl
     );
-    // console.log(mansJewelryItems);
-    console.log(targetProducts);
     axios
       .put(url, targetProducts)
       .then(dispatch(mansJewelry(targetProducts)))
       .catch((error) => {});
   };
+
   return (
     <div>
-      <h1>Admin Products</h1>
-      <AddProductForm onChange={handleChange} collection={collection} />
+      <h1 className='text-center'>Редактирование и добавление товаров</h1>
+      <AddProductForm
+          onClean={handleCleanForm}
+        onChange={handleChange}
+        collection={collection}
+        isValid={!Object.keys(errors).length}
+        errors={errors}
+      />
       <p> Какую категорию надо отредактировать?</p>
       <div onClick={() => handleChangeCategory("man")}>Мужское</div>
       <div onClick={() => handleChangeCategory("woman")}>Женское</div>
