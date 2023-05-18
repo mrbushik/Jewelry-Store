@@ -42,7 +42,7 @@ const ProductsForEditRender: React.FC<productRenderProps> = ({
 
   return (
     <Link
-      to={`${location.pathname}/${id}`}
+      to={`${location.pathname}/${id}${item.category}`}
       className="product-cart my-3 position-relative"
     >
       <EditBlock onDelete={handleDelete} />
