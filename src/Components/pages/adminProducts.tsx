@@ -31,7 +31,7 @@ const AdminProducts: React.FC = () => {
   const womanJewelryURL: string = `${process.env.REACT_APP_DOMAIN_NAME}/Products/woman.json`;
 
   const [allProducts, setAllProducts] = useState<any>();
-  const [category, setCategory] = useState<CategoryType>();
+  const [category, setCategory] = useState<any>();
   const [errors, setErrors] = useState({ email: "", password: "" });
   const [collection, setCollection] = useState({
     title: "",
@@ -126,6 +126,8 @@ const AdminProducts: React.FC = () => {
       .catch((error) => {});
   };
 
+  // @ts-ignore
+  // @ts-ignore
   return (
     <div>
       <h1 className='text-center'>Редактирование и добавление товаров</h1>
@@ -149,6 +151,16 @@ const AdminProducts: React.FC = () => {
               key={index + item.imageLink}
             />
           ))}
+          {category === "" && !!mansJewelryItems.length && (
+              <div className="d-flex flex-wrap justify-content-center my-5">
+                {mansJewelryItems?.map((item: productItem, index: number) => (
+                    <ProductsForEditRender
+                        onDelete={handleDeleteProduct}
+                        item={item}
+                        id={index}
+                        key={index + item.imageLink}
+                    />
+                ))}
         </div>
       )}
     </div>

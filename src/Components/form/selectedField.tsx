@@ -20,10 +20,9 @@ const SelectedField: React.FC<selectedFieldProps> = ({
   label,
   error,
 }) => {
+  let currentValue = value;
+
   const handleChange = (event: any) => {
-    console.log(
-      options.find((item: filterPrice) => item.name === event.target.value)
-    );
     onChange({
       name: event.target.name,
       value: options.find(
@@ -33,7 +32,7 @@ const SelectedField: React.FC<selectedFieldProps> = ({
   };
 
   const getInputClasses = () => {
-    return 'form-select' + (error ? ' is-invalid' : '');
+    return "form-select" + (error ? " is-invalid" : "");
   };
 
   return (
@@ -45,7 +44,7 @@ const SelectedField: React.FC<selectedFieldProps> = ({
         className={getInputClasses()}
         id={name}
         name={name}
-        value={value || ""}
+        value={currentValue || ""}
         onChange={handleChange}
       >
         <option disabled value={""}>

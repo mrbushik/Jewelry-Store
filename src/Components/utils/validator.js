@@ -1,5 +1,4 @@
 export function validator(data, config) {
-  console.log(data);
   const errors = {};
   function validate(validateMethod, data, config) {
     let statusValidate;
@@ -8,6 +7,22 @@ export function validator(data, config) {
         if (typeof data === "boolean") {
           statusValidate = !data;
         } else {
+          statusValidate = data.trim() === "";
+        }
+        break;
+      }
+      case "isRequiredEdit": {
+        if (typeof data === "string") {
+          statusValidate = data.trim() === "";
+        }
+        statusValidate = !data;
+
+        break;
+      }
+      case "isRequiredNumber": {
+        if (typeof data === "number") {
+          statusValidate = !data;
+        } else if (typeof data === "string") {
           statusValidate = data.trim() === "";
         }
         break;
