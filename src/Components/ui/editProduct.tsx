@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, Link } from "react-router-dom";
 import {
   mensJewelryRequest,
   womanJewelryRequest,
@@ -9,8 +9,6 @@ import { productItem } from "../interfaces";
 import AddProductForm from "./addProductForm";
 import { validator } from "../utils/validator";
 import axios from "axios";
-import { Simulate } from "react-dom/test-utils";
-import error = Simulate.error;
 
 const EditProduct: React.FC = () => {
   const history = useHistory();
@@ -53,7 +51,12 @@ const EditProduct: React.FC = () => {
 
   useEffect(() => {
     if (userInfo.statusUser !== "ADMIN") history.push("/");
-    location.pathname.includes("mans") ? getWomanProducts() : getMansProducts();
+
+    if (location.pathname.includes("mens")) {
+      getMansProducts();
+    } else {
+      getWomanProducts();
+    }
   }, []);
 
   function findNumbersInString(str: any) {
@@ -67,7 +70,6 @@ const EditProduct: React.FC = () => {
       setCurrentProduct(
         mansJewelryItems[findNumbersInString(location.pathname)]
       );
-      console.log(mansJewelryItems[findNumbersInString(location.pathname)]);
     } else {
       setCurrentProduct(
         womanJewelryItems[findNumbersInString(location.pathname)]
@@ -158,6 +160,7 @@ const EditProduct: React.FC = () => {
   return (
     <div>
       <h1 className="mt-4 text-center">Редактирование товара</h1>
+      <Link to={'/adminproducts'} className="btn ms-3  btn-secondary">Назад</Link>
       <AddProductForm
         onChange={handleChange}
         collection={currentProduct}

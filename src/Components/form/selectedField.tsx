@@ -20,7 +20,14 @@ const SelectedField: React.FC<selectedFieldProps> = ({
   label,
   error,
 }) => {
-  let currentValue = value;
+  // let currentValue = value ? value : {value: value};
+
+  // if (currentValue) {
+  //   console.log("yes");
+  //   currentValue = { value: value, name: value };
+  // }
+
+  // console.log(currentValue);
 
   const handleChange = (event: any) => {
     onChange({
@@ -44,7 +51,7 @@ const SelectedField: React.FC<selectedFieldProps> = ({
         className={getInputClasses()}
         id={name}
         name={name}
-        value={currentValue || ""}
+        value={value || ""}
         onChange={handleChange}
       >
         <option disabled value={""}>

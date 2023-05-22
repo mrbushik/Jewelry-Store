@@ -37,13 +37,13 @@ const AddProductForm: React.FC<addProductFormProps> = ({
   //     type: "",
   //   };
 
-  const handleSubmitNewProduct = () => {
-    if (collection.category.value === "mans") {
-      addManProduct();
+  const handleSubmitNewProduct = async () => {
+    if (collection.category.value === "mens") {
+      await addManProduct();
     } else {
-      addWomanProduct();
+      await addWomanProduct();
     }
-    onClean();
+    // onClean();
   };
   const addManProduct = () => {
     axios
@@ -51,11 +51,12 @@ const AddProductForm: React.FC<addProductFormProps> = ({
         title: collection.title,
         imageLink: collection.imageLink,
         category: collection.category.value,
-        metal: collection.category.value,
+        metal: collection.metal.value,
         price: collection.price,
         weight: collection.weight,
         type: "",
       })
+      .then(() => onClean())
       .catch((error) => {});
   };
 
@@ -65,13 +66,19 @@ const AddProductForm: React.FC<addProductFormProps> = ({
         title: collection.title,
         imageLink: collection.imageLink,
         category: collection.category.value,
-        metal: collection.category.value,
+        metal: collection.metal.value,
         price: collection.price,
         weight: collection.weight,
         type: "",
       })
+      .then(() => onClean())
       .catch((error) => {});
   };
+
+  let categorySelect = collection.category === "woman" ? "Женское" : "Мужское";
+  let typeSelect = collection.metal === "gold" ? "Золото" : "Серебро";
+  if (!collection.category) categorySelect = "";
+  if (!collection.metal) typeSelect = "";
 
   return (
     <div>
@@ -103,7 +110,7 @@ const AddProductForm: React.FC<addProductFormProps> = ({
             value={
               collection.category.name
                 ? collection.category.name
-                : collection.category
+                : categorySelect
             }
             onChange={onChange}
             defaultOption={""}
@@ -117,9 +124,7 @@ const AddProductForm: React.FC<addProductFormProps> = ({
           <SelectedField
             error={errors.metal}
             label={"Тип метала"}
-            value={
-              collection.metal.name ? collection.metal.name : collection.metal
-            }
+            value={collection.metal.name ? collection.metal.name : typeSelect}
             onChange={onChange}
             defaultOption={""}
             options={[

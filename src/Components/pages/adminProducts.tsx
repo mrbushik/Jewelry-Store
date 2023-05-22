@@ -42,17 +42,6 @@ const AdminProducts: React.FC = () => {
     weight: "",
   });
 
-  const handleCleanForm = () => {
-    setCollection({
-      title: "",
-      imageLink: "",
-      category: "",
-      metal: "",
-      price: "",
-      weight: "",
-    });
-  };
-
   const handleChange = (target: any) => {
     setCollection((prevState) => ({
       ...prevState,
@@ -99,14 +88,18 @@ const AdminProducts: React.FC = () => {
     return !Object.keys(errors).length;
   };
 
+  const getData = () => {
+    dispatch(womanJewelryRequest(womanJewelryURL));
+    dispatch(mensJewelryRequest(mansJewelryURL));
+  };
+
   useEffect(() => {
     validate();
   }, [collection]);
 
   useEffect(() => {
     if (userInfo.statusUser !== "ADMIN") history.push("/");
-    dispatch(womanJewelryRequest(womanJewelryURL));
-    dispatch(mensJewelryRequest(mansJewelryURL));
+    getData();
   }, []);
 
   const handleChangeCategory = (category: CategoryType) =>
@@ -126,21 +119,51 @@ const AdminProducts: React.FC = () => {
       .catch((error) => {});
   };
 
-  // @ts-ignore
-  // @ts-ignore
+  const handleCleanForm = () => {
+    setCollection({
+      title: "",
+      imageLink: "",
+      category: "",
+      metal: "",
+      price: "",
+      weight: "",
+    });
+
+    getData();
+  };
+
   return (
     <div>
-      <h1 className='text-center'>Редактирование и добавление товаров</h1>
+      <h1 className="text-center">Редактирование и добавление товаров</h1>
       <AddProductForm
-          onClean={handleCleanForm}
+        onClean={handleCleanForm}
         onChange={handleChange}
         collection={collection}
         isValid={!Object.keys(errors).length}
         errors={errors}
       />
-      <p> Какую категорию надо отредактировать?</p>
-      <div onClick={() => handleChangeCategory("man")}>Мужское</div>
-      <div onClick={() => handleChangeCategory("woman")}>Женское</div>
+      <p className="fs-3 text-center mx-3">
+        {" "}
+        Какую категорию надо отредактировать?
+      </p>
+      <div className="admin__products-btns">
+        <div
+          className={`btn ${
+            category === "man" ? "btn-primary" : "btn-secondary"
+          }`}
+          onClick={() => handleChangeCategory("man")}
+        >
+          Мужское
+        </div>
+        <div
+          className={`btn ${
+            category === "woman" ? "btn-primary" : "btn-secondary"
+          } `}
+          onClick={() => handleChangeCategory("woman")}
+        >
+          Женское
+        </div>
+      </div>
       {category === "man" && !!mansJewelryItems.length && (
         <div className="d-flex flex-wrap justify-content-center my-5">
           {mansJewelryItems?.map((item: productItem, index: number) => (
@@ -151,16 +174,18 @@ const AdminProducts: React.FC = () => {
               key={index + item.imageLink}
             />
           ))}
-          {category === "" && !!mansJewelryItems.length && (
-              <div className="d-flex flex-wrap justify-content-center my-5">
-                {mansJewelryItems?.map((item: productItem, index: number) => (
-                    <ProductsForEditRender
-                        onDelete={handleDeleteProduct}
-                        item={item}
-                        id={index}
-                        key={index + item.imageLink}
-                    />
-                ))}
+        </div>
+      )}
+      {category === "woman" && !!mansJewelryItems.length && (
+        <div className="d-flex flex-wrap justify-content-center my-5">
+          {womanJewelryItems?.map((item: productItem, index: number) => (
+            <ProductsForEditRender
+              onDelete={handleDeleteProduct}
+              item={item}
+              id={index}
+              key={index + item.imageLink}
+            />
+          ))}
         </div>
       )}
     </div>

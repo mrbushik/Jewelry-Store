@@ -157,3 +157,10 @@ code {
   width: fit-content;
   padding: 0 10px;
 }
+
+.admin__products-btns{
+  display: flex;
+  width: 50%;
+  margin: 20px auto;
+  justify-content: space-around;
+}
