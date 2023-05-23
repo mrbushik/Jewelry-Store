@@ -14,7 +14,7 @@ const AdminPanel: React.FC = () => {
   const dispatch: any = useDispatch();
   const history = useHistory();
   const allOrders = useSelector((state: any) => state.productData.orders);
-  // const adminAuth = useSelector((state: any) => state.auth.adminAuth);
+  const adminAuthData = useSelector((state: any) => state.auth.adminAuth);
   const userInfo = useSelector((state: any) => state.auth.userData);
   const [adminRights, setAdminRights] = useState<boolean>(false);
   const [field, setField] = useState({ password: "" });
@@ -40,6 +40,10 @@ const AdminPanel: React.FC = () => {
     deleteRequest(copiedOrders);
   };
 
+  useEffect(() => {
+    adminAuthStatus === "true" ? setAdminRights(true) : setAdminRights(false);
+  }, [adminAuthData]);
+
   const deleteRequest = (items: any) => {
     axios
       .put(ORDERS_URL, items)
@@ -58,11 +62,9 @@ const AdminPanel: React.FC = () => {
     field.password === password ? dispatch(adminAuth(true)) : setErrors(true);
   };
 
-  console.log(adminAuthStatus);
-
   return (
     <div>
-      <AdminNavBar />
+      {adminRights && <AdminNavBar />}
       {adminRights ? (
         <div className="d-flex ms-4 mt-5 flex-column">
           {currentOrderList?.map((item: orderItem, index: number) => (

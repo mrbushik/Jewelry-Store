@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { isAuth, userData } from "../redux/actions/auth";
+import { adminAuth, isAuth, userData } from "../redux/actions/auth";
 import { deleteProductInCart } from "../redux/actions/cart";
 
 const NavBar: React.FC = () => {
@@ -15,6 +15,7 @@ const NavBar: React.FC = () => {
     dispatch(isAuth(false));
     dispatch(userData(""));
     dispatch(deleteProductInCart([]));
+    dispatch(adminAuth(false));
   };
 
   return (

@@ -144,7 +144,6 @@ const AdminProducts: React.FC = () => {
         errors={errors}
       />
       <p className="fs-3 text-center mt-5">
-        {" "}
         Какой товар надо отредактировать?
       </p>
       <div className="admin__products-btns mb-5">
