@@ -26,25 +26,14 @@ const AddProductForm: React.FC<addProductFormProps> = ({
   const mansJewelryURL: string = `${process.env.REACT_APP_DOMAIN_NAME}/Products/mens.json`;
   const womanJewelryURL: string = `${process.env.REACT_APP_DOMAIN_NAME}/Products/woman.json`;
 
-  // if(collection){
-  //   const submitProduct = {
-  //     title: collection.title,
-  //     imageLink: collection.imageLink,
-  //     category: collection.category.value,
-  //     metal: collection.category.value,
-  //     price: collection.price,
-  //     weight: collection.weight,
-  //     type: "",
-  //   };
-
   const handleSubmitNewProduct = async () => {
     if (collection.category.value === "mens") {
       await addManProduct();
     } else {
       await addWomanProduct();
     }
-    // onClean();
   };
+
   const addManProduct = () => {
     axios
       .post(mansJewelryURL, {
@@ -75,10 +64,14 @@ const AddProductForm: React.FC<addProductFormProps> = ({
       .catch((error) => {});
   };
 
-  let categorySelect = collection.category === "woman" ? "Женское" : "Мужское";
-  let typeSelect = collection.metal === "gold" ? "Золото" : "Серебро";
-  if (!collection.category) categorySelect = "";
-  if (!collection.metal) typeSelect = "";
+  let categorySelect;
+  let typeSelect;
+  if (collection) {
+    categorySelect = collection.category === "woman" ? "Женское" : "Мужское";
+    typeSelect = collection.metal === "gold" ? "Золото" : "Серебро";
+    if (!collection.category) categorySelect = "";
+    if (!collection.metal) typeSelect = "";
+  }
 
   return (
     <div>

@@ -7,7 +7,7 @@ interface editBlockProps {
 const EditBlock: React.FC<editBlockProps> = ({ onDelete }) => {
   return (
     <div className="edit__block_wrapper">
-      <div onClick={onDelete}>
+      <div className='delete__admin-product-btn' onClick={onDelete}>
         <svg
           width="30px"
           height="30px"

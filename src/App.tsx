@@ -20,7 +20,9 @@ const App: React.FC = () => {
   const [isLogin, setIsLogin] = useState(false);
 
   useEffect(() => {
-    location.pathname === "/login" || location.pathname === "/adminpanel"
+    location.pathname === "/login" ||
+    location.pathname === "/adminpanel" ||
+    location.pathname?.includes("adminproducts")
       ? setIsLogin(true)
       : setIsLogin(false);
   }, [location]);

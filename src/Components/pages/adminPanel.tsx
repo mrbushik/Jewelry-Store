@@ -7,11 +7,14 @@ import { orderItem } from "../interfaces";
 import OrderRender from "../ui/orderRender";
 import TextField from "../form/textField";
 import { validator } from "../utils/validator";
+import AdminNavBar from "../navigation/adminNavBar";
+import { adminAuth } from "../redux/actions/auth";
 
 const AdminPanel: React.FC = () => {
   const dispatch: any = useDispatch();
   const history = useHistory();
   const allOrders = useSelector((state: any) => state.productData.orders);
+  // const adminAuth = useSelector((state: any) => state.auth.adminAuth);
   const userInfo = useSelector((state: any) => state.auth.userData);
   const [adminRights, setAdminRights] = useState<boolean>(false);
   const [field, setField] = useState({ password: "" });
@@ -20,6 +23,7 @@ const AdminPanel: React.FC = () => {
   const allOrdersKeys = Object.keys(allOrders);
   const password = "111111";
   const ORDERS_URL = `${process.env.REACT_APP_DOMAIN_NAME}/orders/.json`;
+  const adminAuthStatus = localStorage.getItem("adminAuth");
 
   const handleUpdate = () => dispatch(allOrdersRequest(ORDERS_URL));
 
@@ -51,11 +55,14 @@ const AdminPanel: React.FC = () => {
   };
 
   const handleSubmit = () => {
-    field.password === password ? setAdminRights(true) : setErrors(true);
+    field.password === password ? dispatch(adminAuth(true)) : setErrors(true);
   };
+
+  console.log(adminAuthStatus);
 
   return (
     <div>
+      <AdminNavBar />
       {adminRights ? (
         <div className="d-flex ms-4 mt-5 flex-column">
           {currentOrderList?.map((item: orderItem, index: number) => (

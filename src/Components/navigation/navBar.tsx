@@ -6,13 +6,11 @@ import { deleteProductInCart } from "../redux/actions/cart";
 
 const NavBar: React.FC = () => {
   const dispatch = useDispatch();
-  // const userAuthStatus =
 
   const authInfo: string | null = localStorage.getItem("name");
   const [authStatus, setAuthStatus] = React.useState(!authInfo);
 
   const userName = useSelector((state: any) => state.auth.userData);
-  // console.log(userName);
   const handleClearSession = () => {
     dispatch(isAuth(false));
     dispatch(userData(""));

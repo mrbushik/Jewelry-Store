@@ -158,9 +158,20 @@ code {
   padding: 0 10px;
 }
 
-.admin__products-btns{
+.admin__products-btns {
   display: flex;
   width: 50%;
   margin: 20px auto;
   justify-content: space-around;
+}
+
+.delete__admin-product-btn {
+  z-index: 2;
+}
+
+.admin__nav {
+  padding: 0px 5%;
+  height: 70px;
+  display: flex;
+  align-items: center;
 }

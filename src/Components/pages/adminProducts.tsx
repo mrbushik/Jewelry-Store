@@ -8,10 +8,10 @@ import {
   womanJewelryRequest,
 } from "../redux/actions/productData";
 import { productItem } from "../interfaces";
-import ProductRender from "../ui/productRender";
 import ProductsForEditRender from "../ui/productsForEditRender";
 import AddProductForm from "../ui/addProductForm";
 import { validator } from "../utils/validator";
+import AdminNavBar from "../navigation/adminNavBar";
 
 type CategoryType = "" | "man" | "woman";
 
@@ -134,6 +134,7 @@ const AdminProducts: React.FC = () => {
 
   return (
     <div>
+      <AdminNavBar/>
       <h1 className="text-center">Редактирование и добавление товаров</h1>
       <AddProductForm
         onClean={handleCleanForm}
@@ -142,11 +143,11 @@ const AdminProducts: React.FC = () => {
         isValid={!Object.keys(errors).length}
         errors={errors}
       />
-      <p className="fs-3 text-center mx-3">
+      <p className="fs-3 text-center mt-5">
         {" "}
-        Какую категорию надо отредактировать?
+        Какой товар надо отредактировать?
       </p>
-      <div className="admin__products-btns">
+      <div className="admin__products-btns mb-5">
         <div
           className={`btn ${
             category === "man" ? "btn-primary" : "btn-secondary"

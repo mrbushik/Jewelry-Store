@@ -9,6 +9,7 @@ import { productItem } from "../interfaces";
 import AddProductForm from "./addProductForm";
 import { validator } from "../utils/validator";
 import axios from "axios";
+import AdminNavBar from "../navigation/adminNavBar";
 
 const EditProduct: React.FC = () => {
   const history = useHistory();
@@ -141,14 +142,14 @@ const EditProduct: React.FC = () => {
       data[findNumbersInString(location.pathname)] = currentProduct;
       handleRequest(
         JSON.stringify(data),
-        "https://jewelry-store-3488f-default-rtdb.europe-west1.firebasedatabase.app/Products/mens.json"
+        `${process.env.REACT_APP_DOMAIN_NAME}/Products/mens.json`
       );
     } else {
       data = womanJewelryItems;
       data[findNumbersInString(location.pathname)] = currentProduct;
       handleRequest(
         JSON.stringify(data),
-        "https://jewelry-store-3488f-default-rtdb.europe-west1.firebasedatabase.app/Products/woman.json"
+        `${process.env.REACT_APP_DOMAIN_NAME}/Products/woman.json`
       );
     }
   };
@@ -159,8 +160,11 @@ const EditProduct: React.FC = () => {
 
   return (
     <div>
+      <AdminNavBar/>
       <h1 className="mt-4 text-center">Редактирование товара</h1>
-      <Link to={'/adminproducts'} className="btn ms-3  btn-secondary">Назад</Link>
+      <Link to={"/adminproducts"} className="btn ms-3  btn-secondary">
+        Назад
+      </Link>
       <AddProductForm
         onChange={handleChange}
         collection={currentProduct}
