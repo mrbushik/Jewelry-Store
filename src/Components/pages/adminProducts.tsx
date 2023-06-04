@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import axios, { all } from "axios";
 import {
   mansJewelry,
-  mensJewelryRequest,
+  mensJewelryRequest, womanJewelry,
   womanJewelryRequest,
 } from "../redux/actions/productData";
 import { productItem } from "../interfaces";
@@ -105,17 +105,24 @@ const AdminProducts: React.FC = () => {
   const handleChangeCategory = (category: CategoryType) =>
     setCategory(category);
 
-  const handleDeleteProduct = async (
-    url: string,
-    category: string,
-    imageUrl: string
-  ) => {
-    const targetProducts: productItem[] = mansJewelryItems.filter(
-      (item: productItem) => item.imageLink !== imageUrl
-    );
+  const handleDeleteProduct = async (category: string, imageUrl: string) => {
+    let targetProducts: productItem[];
+    if (category === "mens") {
+      targetProducts = mansJewelryItems.filter(
+        (item: productItem) => item.imageLink !== imageUrl
+      );
+    } else {
+      targetProducts = womanJewelryItems.filter(
+        (item: productItem) => item.imageLink !== imageUrl
+      );
+    }
+    // console.log(category === "mens" ? mansJewelryURL : womanJewelryURL);
     axios
-      .put(url, targetProducts)
-      .then(dispatch(mansJewelry(targetProducts)))
+      .put(
+        category === "mens" ? mansJewelryURL : womanJewelryURL,
+        targetProducts
+      )
+      .then(category === 'mens' ? dispatch(mansJewelry(targetProducts)) : dispatch(womanJewelry(targetProducts)))
       .catch((error) => {});
   };
 
@@ -134,7 +141,7 @@ const AdminProducts: React.FC = () => {
 
   return (
     <div>
-      <AdminNavBar/>
+      <AdminNavBar />
       <h1 className="text-center">Редактирование и добавление товаров</h1>
       <AddProductForm
         onClean={handleCleanForm}
@@ -143,9 +150,7 @@ const AdminProducts: React.FC = () => {
         isValid={!Object.keys(errors).length}
         errors={errors}
       />
-      <p className="fs-3 text-center mt-5">
-        Какой товар надо отредактировать?
-      </p>
+      <p className="fs-3 text-center mt-5">Какой товар надо отредактировать?</p>
       <div className="admin__products-btns mb-5">
         <div
           className={`btn ${

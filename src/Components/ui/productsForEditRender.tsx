@@ -7,7 +7,7 @@ import EditBlock from "./editBlock";
 type productRenderProps = {
   item: productItem;
   id: number;
-  onDelete(url: string, category: string, imageUrl: string): void;
+  onDelete( category: string, imageUrl: string): void;
 };
 
 const ProductsForEditRender: React.FC<productRenderProps> = ({
@@ -20,7 +20,7 @@ const ProductsForEditRender: React.FC<productRenderProps> = ({
   const location = useLocation();
   const cartItems = useSelector((state: any) => state.cart.cartItems);
 
-  const handleDelete = () => onDelete(mansJewelryURL, "mans", item.imageLink);
+  const handleDelete = () => onDelete(item.category, item.imageLink);
 
   return (
     <>
